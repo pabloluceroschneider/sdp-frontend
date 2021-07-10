@@ -1,0 +1,34 @@
+{
+	"User not found.": "Usuario no encontrado.",
+	"Password incorrect.": "Contraseña incorrecta. Por favor, intente nuevamente.",
+	"Username cannot be empty.": "Ingrese usuario, por favor.",
+	"Password cannot be empty.": "Ingrese contraseña, por favor.",
+	"Another Company already has name {$}": "La empresa {$} ya existe.",
+
+
+
+
+
+
+
+	"label.save-changes": "Guardar Cambios",
+	"label.save": "Guardar",
+	"label.tasks": "Tareas",
+
+
+	"NOT_STARTED": "NOT_STARTED edited",
+
+
+
+
+	"Could not find any User with Username {$}.": "Asigne un responable a todas las tareas, por favor.",
+	"Quantity cannot be zero.": "Asigne una cantidad a la nueva tarea, por favor.",
+	"Work Order id cannot be null or empty.": "La orden de trabajo no posee identificador.",
+	"Name cannot be null or empty.": "Asigne un nombre a la nueva tarea, por favor.",
+
+	"Product id cannot be null or empty.": "Seleccione un producto, por favor.",
+	"Product name cannot be null or empty." : "Ingrese nombre del producto, por favor.",
+	"Base Plan name cannot be null or empty.": "Ingrese un nombre para el plan, por favor.",
+	"Task list cannot be null or empty.": "Ingrese tareas para el plano, por favor."
+
+}
