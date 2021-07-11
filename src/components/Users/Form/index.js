@@ -33,6 +33,7 @@ function Form({ handleTabChange}) {
     if (!validated) { setform({ ...form, error: true }); return; }
     setform({ ...form, loading: true })
     await usersService.create({
+      fullname: form.fullname,
       username: form.username,
       password: form.password,
     });

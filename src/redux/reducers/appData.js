@@ -2,6 +2,10 @@ import { SET_USERS, SET_COMPANIES, SET_PRODUCTS, SET_BASEPLANS } from "../action
 
 const initialState = {
   companies: [],
+  products: [],
+  optionscompanies: {},
+  optionsproducts: {},
+  lookupproducts: {},
   users: [],
   status: [
     { id: "NOT_STARTED",         name: "No comenazada"       },
@@ -16,6 +20,7 @@ const initialState = {
   lookupusers: {
     'Sin asignar':'Sin asignar'
   },
+  optionsusers: [],
   lookupstatus: { 
     NOT_STARTED         : 'No comenzada', 
     IN_PROGRESS         : 'En progreso',
@@ -24,6 +29,7 @@ const initialState = {
     FINISHED            : 'Terminada',
     FINISHED_WITH_ERROR : 'Terminada con error',
   },
+  optionsbaseplans: {},
 };
 
 export default function(state = initialState, action) {
