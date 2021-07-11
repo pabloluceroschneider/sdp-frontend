@@ -23,6 +23,7 @@ import authService from '../services/authService';
 import { useDispatch } from 'react-redux';
 import { setToken, setPermissions } from '../redux/actions';
 
+import redirectByPermissions from 'helpers/redirectByPermissions'
 import loginImage from "assets/img/login-image.jpeg";
 
 const useStyles = makeStyles((theme) => ({
@@ -98,7 +99,7 @@ function SignInSide({ t }) {
     setbtnSubmitText("Ingresando...");
     dispatchToken(permissions);
     dispatchPermissions(permissions)
-    window.location.href = `admin/home`;
+    window.location.href = redirectByPermissions(permissions);
   }
 
   const handleClick = async (e) => {

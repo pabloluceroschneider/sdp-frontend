@@ -14,6 +14,7 @@ import ErrorBoundary from "components/ErrorBoundary";
 import Login from "layouts/Login.js";
 import Admin from "layouts/Admin.js";
 
+import redirectByPermissions from 'helpers/redirectByPermissions';
 import "assets/css/material-dashboard-react.css?v=1.9.0";
 
 const hist = createBrowserHistory();
@@ -21,13 +22,7 @@ const hist = createBrowserHistory();
 const Routes = () => {
   const token = useSelector(state => state.auth.token);
   const permissions = useSelector(state => state.permissions);
-  let redirect;
-
-  if (permissions?.includes('Administrador')){
-    redirect = '/admin/permisos'
-  }else if(permissions?.includes('OPERATOR')){
-    redirect = '/admin/user'
-  }
+  let redirect = redirectByPermissions(permissions);
 
   const authRoutes = (
     <Switch>

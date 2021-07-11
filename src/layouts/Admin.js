@@ -20,6 +20,7 @@ import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/logo-sdp.png";
 
 import ErrorBoundary from 'components/ErrorBoundary'
+import redirectByPermissions from 'helpers/redirectByPermissions'
 
 let ps;
 
@@ -49,13 +50,8 @@ const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {
   const permissions = useSelector(state => state.permissions);
-  let redirect;
+  let redirect = redirectByPermissions(permissions);
 
-  if (permissions.includes('Administrador')){
-    redirect = '/admin/permisos'
-  }else if(permissions.includes('OPERATOR')){
-    redirect = '/admin/user'
-  }
   // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
