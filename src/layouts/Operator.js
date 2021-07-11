@@ -12,9 +12,9 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 //redux
 import { useSelector } from 'react-redux';
 
-import {adminRoutes as routes} from "routes.js";
+import {operatorRoutes as routes} from "routes.js";
 
-import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
+import styles from "assets/jss/material-dashboard-react/layouts/operatorStyle.js";
 
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/logo-sdp.png";
@@ -28,7 +28,7 @@ const switchRoutes = (permissions, redirect) => (
   <ErrorBoundary>
     <Switch>
       {routes.map((prop, key) => {
-        if (prop.layout === "/admin") {
+        if (prop.layout === "/operario") {
           const showRoute = !!(prop.permissions && prop.permissions.some( item =>  permissions.includes(item)))
 
           return showRoute ? (
@@ -41,7 +41,7 @@ const switchRoutes = (permissions, redirect) => (
         }
         return null;
       })}
-      <Redirect from="/admin" to={redirect} />
+      <Redirect from="/operario" to={redirect} />
     </Switch>
   </ErrorBoundary>
 );
@@ -57,8 +57,6 @@ export default function Admin({ ...rest }) {
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
   // states and functions
-  const [image] = React.useState(bgImage);
-  const [color] = React.useState("blue");
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -88,27 +86,15 @@ export default function Admin({ ...rest }) {
   }, [mainPanel]);
   return (
     <div className={classes.wrapper}>
-      <Sidebar
-        routes={routes}
-        logoText={"SDP"}
-        logo={logo}
-        image={image}
-        handleDrawerToggle={handleDrawerToggle}
-        open={mobileOpen}
-        color={color}
-        {...rest}
-      />
-      <div className={classes.mainPanel} ref={mainPanel}>
+      <div ref={mainPanel}>
         <Navbar
           routes={routes}
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />
-
         <div className={classes.content}>
           <div className={classes.container}>{switchRoutes(permissions, redirect)}</div>
         </div>
-      
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 
 const redirect = {
   'Administrador': '/admin/usuarios',
-  'Operario': '/admin/operario',
+  'Operario': '/operario/proceso',
+  'unauthorized': '/unauthorized',
 }
 
 export default function redirectByPermissions(permissions){
@@ -14,4 +15,5 @@ export default function redirectByPermissions(permissions){
     return redirect.Operario;
   }
 
+  return redirect.unauthorized;
 }

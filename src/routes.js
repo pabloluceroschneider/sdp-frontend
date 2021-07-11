@@ -10,7 +10,9 @@ import BasePlans from "views/BasePlans";
 import Products from "views/Products";
 import WorkOrders from "views/WorkOrders";
 
-const adminRoutes = [
+import ProcessView from "views/Process";
+
+export const adminRoutes = [
   {
     path: "/ordenes-de-trabajo",
     name: "Ordenes de Trabajo",
@@ -53,4 +55,13 @@ const adminRoutes = [
   }
 ];
 
-export default adminRoutes;
+export const operatorRoutes = [
+  {
+    path: "/proceso",
+    name: "Proceso",
+    permissions: ['Operario'],
+    icon: BuildIcon,
+    component: ProcessView,
+    layout: "/operario"
+  },
+]

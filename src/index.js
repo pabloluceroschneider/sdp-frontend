@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import ErrorBoundary from "components/ErrorBoundary";
 import Login from "layouts/Login.js";
 import Admin from "layouts/Admin.js";
+import OperatorLayout from "layouts/Operator.js";
 
 import redirectByPermissions from 'helpers/redirectByPermissions';
 import "assets/css/material-dashboard-react.css?v=1.9.0";
@@ -27,6 +28,7 @@ const Routes = () => {
   const authRoutes = (
     <Switch>
       <Route path="/admin" component={Admin} />
+      <Route path="/operario" component={OperatorLayout} />
       <Route path="/ingresar" component={Login} />
       <Redirect from="/" to={redirect} />
     </Switch>
