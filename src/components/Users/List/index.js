@@ -9,6 +9,7 @@ export default function UsersList({
   return ( 
     <MaterialTable
       data={users}
+      isLoading={!Boolean(users)}
       columns={[
         { title: 'Nombre Completo', field: 'fullname' },
         { title: 'Usuario', field: 'username' },

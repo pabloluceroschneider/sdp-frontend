@@ -17,6 +17,7 @@ function TasksTable({
   return ( 
     <MaterialTable
       data={products}
+      isLoading={!Boolean(products)}
       columns={[
         { title: 'Producto', field: 'name'},
         { 

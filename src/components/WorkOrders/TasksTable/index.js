@@ -40,9 +40,9 @@ function TasksTable({
   })
 
   return ( 
-    Boolean(data?.length) &&
     <MaterialTable
       data={data}
+      isLoading={!Boolean(data.length)}
       columns={[
         { title: 'Nombre', field: 'name', editable: 'onAdd', defaultSort: 'asc'},
         { title: 'Responsable', field: 'assignedTo', lookup: users, initialEditValue: 'Sin asignar' },

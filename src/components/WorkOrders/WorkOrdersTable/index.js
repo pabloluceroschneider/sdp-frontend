@@ -33,6 +33,7 @@ function WorkOrdersTable({ workorders, onClickRow }) {
         { title: 'Cantidad', field: 'quantity' },
         { title: 'Fecha de Alta', field: 'creationDate', render: ({creationDate}) => new Date(creationDate).toLocaleDateString()},
       ]}
+      isLoading={!Boolean(workorders)}
       data={workorders}
       onRowClick={(_, rowData) => onClickRow(rowData)}
       options={{
