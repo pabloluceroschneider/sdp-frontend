@@ -34,7 +34,7 @@ workOrderService.create = async ({ workorder, tasks }) => {
 	const uri = `${endpoint}/workorders`;
 	const bodyTasks = tasks.map( t => ({
 		name: t.name,
-		quantity: workorder.quantity,
+		quantity: t.quantity,
 		assignedTo: t.assignedTo,
 		done: t.done,
 		status: t.status,

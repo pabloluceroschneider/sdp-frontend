@@ -87,7 +87,7 @@ function Form({
           <Autocomplete 
             label="Producto" 
             id="product"
-            options={optionsproducts && optionsproducts[form.company?._id] || []} 
+            options={(optionsproducts && optionsproducts[form.company?._id]) || []} 
             defaultValue={{name: formInitValues.product?.name}}
             onChange={actions.handleAutocompleteChange}
             disabled={Boolean(id)}
@@ -110,7 +110,7 @@ function Form({
           : <Autocomplete 
               label="Plano" 
               id="basePlan"
-              options={optionsbaseplans && optionsbaseplans[form.product?._id] || []} 
+              options={(optionsbaseplans && optionsbaseplans[form.product?._id]) || []} 
               onChange={actions.handleAutocompleteChange}
               disabled={Boolean(id)}
               getOptionSelected={(option, value) => option.name === value.name}

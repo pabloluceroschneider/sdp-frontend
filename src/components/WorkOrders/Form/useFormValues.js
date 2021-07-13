@@ -39,10 +39,10 @@ const useFormValues = ({
         status: 'NOT_STARTED',
         assignedTo: 'Sin asignar',
         done: 0,
-        quantity: null,
+        quantity: state.quantity,
         newTaskOrder: index
     }))
-  ,[])
+  ,[state.quantity])
 
   useEffect(() => {
     if (!workorderId && state.basePlan){
@@ -89,24 +89,38 @@ const useFormValues = ({
   const onRowUpdate = useCallback( async (newValue, oldValue) => { 
     const { _id: id } = newValue;
 
-    if (newValue.quantity < oldValue.quantity) {
-      const quantity = Number(oldValue.quantity - newValue.quantity)
-      const payload = {
-        ...newValue,
-        quantity,
-        assignedTo: 'Sin asignar',
-      }
-      dispatch({ type: 'ADD_NEW_TASK', payload });
+    if (newValue.quantity > oldValue.quantity) {
+      const allTasks = [ ...state.newTasks, ...state.tasks ];
+      let validate = allTasks
+        .filter( t => t.name === newValue.name)
+        .reduce( (acc, it) => acc+it.quantity, 0);
+      validate += newValue.quantity - oldValue.quantity;
+      if (validate > state.quantity) return;
     }
    
-    if (id){
+    if (id) {
       await tasksService.update({ id, body: { workorderId, ...newValue }});
       const payload = await getTasksByWorkorderId();
       dispatch({ type: 'SET_WO_TASKS', payload });
-      return;
     }
-    return dispatch({ type: 'UPDATE_NEW_TASKS', payload: newValue });
-  },[dispatch, getTasksByWorkorderId, workorderId, state.quantity]);
+    if (!id){
+      dispatch({ type: 'UPDATE_NEW_TASKS', payload: newValue });
+    }
+
+    if (newValue.quantity < oldValue.quantity) {
+      const quantity = Number(oldValue.quantity - newValue.quantity)
+      const { _id, ...values } = newValue;
+      const payload = {
+        ...values,
+        quantity,
+        assignedTo: 'Sin asignar',
+        status: 'NOT_STARTED',
+        newTaskOrder: state.newTasks.length
+      }
+      dispatch({ type: 'ADD_NEW_TASK', payload });
+    }
+    return
+  },[dispatch, getTasksByWorkorderId, workorderId, state ]);
 
   const handleAutocompleteChange = useCallback( (event, value) => { 
     const field = event.target.id.split("-")[0];

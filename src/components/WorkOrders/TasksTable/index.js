@@ -51,6 +51,7 @@ function TasksTable({
           title: 'Cantidad', 
           field: 'quantity', 
           type: 'numeric',
+          editable: 'onUpdate',
           render: (rowData) => rowData.quantity ?? quantity,
           initialEditValue: quantity,
         },
