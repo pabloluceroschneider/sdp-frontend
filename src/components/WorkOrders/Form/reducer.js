@@ -13,7 +13,7 @@ export default function reducer(state, action){
     SET_WO_TASKS: () => ({ 
       ...state,
       tasks: action.payload,
-      warnings: getTasksWarnings(action.payload),
+      warnings: getTasksWarnings([...action.payload, ...state.newTasks]),
       updateTasks: !state.updateTasks,
     }),
     
@@ -21,14 +21,14 @@ export default function reducer(state, action){
     SET_NEW_TASKS: () => ({
       ...state,
       newTasks: action.payload,
-      warnings: getTasksWarnings(action.payload),
+      warnings: getTasksWarnings([...state.newTasks, ...state.tasks, action.payload]),
       updateTasks: !state.updateTasks,
     }),
     
     ADD_NEW_TASK: () => ({ 
       ...state, 
       newTasks: [...state.newTasks, action.payload],
-      warnings: getTasksWarnings([...state.newTasks, action.payload]),
+      warnings: getTasksWarnings([...state.newTasks, ...state.tasks, action.payload]),
       updateTasks: !state.updateTasks,
     }),
     
@@ -38,7 +38,7 @@ export default function reducer(state, action){
       return {
         ...state, 
         newTasks,
-        warnings: getTasksWarnings(newTasks),
+        warnings: getTasksWarnings([...newTasks, ...state.tasks]),
         updateTasks: !state.updateTasks,
       }
     },
@@ -49,7 +49,7 @@ export default function reducer(state, action){
       return {
         ...state,
         newTasks,
-        warnings: getTasksWarnings(newTasks),
+        warnings: getTasksWarnings([...newTasks, ...state.tasks]),
         updateTasks: !state.updateTasks,
       }
     },

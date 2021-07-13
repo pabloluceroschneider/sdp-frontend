@@ -94,8 +94,10 @@ const useFormValues = ({
       let validate = allTasks
         .filter( t => t.name === newValue.name)
         .reduce( (acc, it) => acc+it.quantity, 0);
-      validate += newValue.quantity - oldValue.quantity;
-      if (validate > state.quantity) return;
+      const tot = validate +( newValue.quantity - oldValue.quantity)
+      if (tot > state.quantity) {
+        newValue.quantity = (state.quantity - validate) + oldValue.quantity
+      }
     }
    
     if (id) {
