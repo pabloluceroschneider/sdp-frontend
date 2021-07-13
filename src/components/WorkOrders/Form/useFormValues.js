@@ -19,6 +19,7 @@ const useFormValues = ({
     company,
     product,
     basePlan,
+    quantity,
     tasks: [],
     newTasks: [],
     updateTasks: false,
@@ -85,15 +86,27 @@ const useFormValues = ({
     return dispatch({ type: 'REMOVE_NEW_TASKS', payload: newValue });
   },[dispatch, getTasksByWorkorderId]);
   
-  const onRowUpdate = useCallback( async newValue => { 
+  const onRowUpdate = useCallback( async (newValue, oldValue) => { 
     const { _id: id } = newValue;
+
+    if (newValue.quantity < oldValue.quantity) {
+      const quantity = Number(oldValue.quantity - newValue.quantity)
+      const payload = {
+        ...newValue,
+        quantity,
+        assignedTo: 'Sin asignar',
+      }
+      dispatch({ type: 'ADD_NEW_TASK', payload });
+    }
+   
     if (id){
       await tasksService.update({ id, body: { workorderId, ...newValue }});
       const payload = await getTasksByWorkorderId();
-      return dispatch({ type: 'SET_WO_TASKS', payload });
+      dispatch({ type: 'SET_WO_TASKS', payload });
+      return;
     }
     return dispatch({ type: 'UPDATE_NEW_TASKS', payload: newValue });
-  },[dispatch, getTasksByWorkorderId, workorderId]);
+  },[dispatch, getTasksByWorkorderId, workorderId, state.quantity]);
 
   const handleAutocompleteChange = useCallback( (event, value) => { 
     const field = event.target.id.split("-")[0];

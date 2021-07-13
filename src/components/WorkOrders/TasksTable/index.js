@@ -27,9 +27,9 @@ function TasksTable({
       setTimeout(res, 400);
   })
 
-  const onRowUpdate = newValue => 
+  const onRowUpdate = (newValue, oldValue) => 
     new Promise( (res, rej) => {
-      onRowUpdateProp(newValue);
+      onRowUpdateProp(newValue, oldValue);
       setTimeout(res, 400);
   })
 
@@ -50,6 +50,7 @@ function TasksTable({
         { 
           title: 'Cantidad', 
           field: 'quantity', 
+          type: 'numeric',
           render: (rowData) => rowData.quantity ?? quantity,
           initialEditValue: quantity,
         },
@@ -62,6 +63,16 @@ function TasksTable({
         paging: false,
         search: false,
         padding: 'dense',
+        rowStyle: (rowValues) => {
+          let styles = {}
+          if (rowValues.assignedTo === 'Sin asignar') {
+            styles.borderLeft = '4px solid orange'
+          }
+          if (rowValues.quantity > quantity) {
+            styles.borderLeft = '4px solid red'
+          }
+          return styles
+        }
       }}
       actions={[
         {
