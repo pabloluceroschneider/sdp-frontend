@@ -1,6 +1,5 @@
-import scope from 'helpers/scope';
+import endpoint from 'helpers/scope';
 import catchResponse from 'helpers/catchResponse';
-const endpoint = `http://${scope}:5000/api/v1`;
 let tasksService = {};
 
 /**

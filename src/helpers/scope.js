@@ -1,6 +1,6 @@
 
-const prod = 'prod-enviroment'
-const localhost = 'localhost'
+const prod = 'https://api-sdp.herokuapp.com/api/v1'
+const localhost = 'http://localhost:5000/api/v1'
 
 const queryString = window.location.search
 const urlParams = new URLSearchParams(queryString)

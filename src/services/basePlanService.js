@@ -1,7 +1,6 @@
-import scope from '../helpers/scope';
+import endpoint from '../helpers/scope';
 import catchResponse from '../helpers/catchResponse';
 import productService from './productService';
-const endpoint = `http://${scope}:5000/api/v1`;
 const is500 = code => code === 500;
 let basePlanService = {};
 
