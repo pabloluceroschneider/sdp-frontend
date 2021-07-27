@@ -1,4 +1,10 @@
-import { SET_USERS, SET_COMPANIES, SET_PRODUCTS, SET_BASEPLANS } from "../actionTypes";
+import {
+  BULK_CONFIGS_APP,
+  SET_USERS,
+  SET_COMPANIES,
+  SET_PRODUCTS,
+  SET_BASEPLANS
+} from "../actionTypes";
 
 const initialState = {
   companies: [],
@@ -34,7 +40,42 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case BULK_CONFIGS_APP: {
+      return {
+        ...state,
+        status: action.payload.status,
+        optionsusers: action.payload.status.reduce((acc, item) => ({...acc, [item._id]: item}),{}),
+        lookupusers: action.payload.status.reduce((acc, item) => ({...acc, [item.username]: item.username}), {
+          'Sin asignar':'Sin asignar'
+        }),
 
+        permissions: action.payload.permissions,
+        
+        users: action.payload.users,
+        
+        
+        companies: action.payload.companies,
+        lookupcompanies: action.payload.companies.reduce((acc, item) => ({...acc, [item.name]: item.name}),{}),
+        optionscompanies: action.payload.companies.reduce((acc, item) => ({...acc, [item._id]: item}),{}),
+
+        products: action.payload.products.map( item => item ),
+        lookupproducts: action.payload.products.reduce((acc, item) => ({...acc, [item.name]: item.name}),{}),
+        optionsproducts: action.payload.products.reduce((acc, item) => {
+          const p = acc[item.companyId] || [];
+          return {...acc, 
+            [item.companyId]: [...p, item]
+          }
+        },{}),
+
+        baseplans: action.payload.baseplans,
+        optionsbaseplans: action.payload.baseplans.reduce((acc, item) => {
+          const p = acc[item.productId] || [];
+          return {...acc, 
+            [item.productId]: [...p, item]
+          }
+        },{}),
+      }
+    }
 
     case SET_USERS: {
       return {
@@ -68,7 +109,7 @@ export default function(state = initialState, action) {
           return {...acc, 
             [item.companyId]: [...p, item]
           }
-        },{})
+        },{}),
       };
     }
 

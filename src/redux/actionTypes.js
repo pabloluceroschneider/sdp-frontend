@@ -1,4 +1,5 @@
 export const SET_TOKEN = "SET_TOKEN";
+export const BULK_CONFIGS_APP = "BULK_CONFIGS_APP";
 export const SET_PERMISSIONS = "SET_PERMISSIONS";
 export const SET_COMPANIES = "SET_COMPANIES";
 export const SET_USERS = "SET_USERS";

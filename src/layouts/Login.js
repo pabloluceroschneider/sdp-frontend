@@ -21,7 +21,7 @@ import withTranslation from 'HOCS/withTranslation';
 import { makeStyles } from '@material-ui/core/styles';
 import authService from '../services/authService';
 import { useDispatch } from 'react-redux';
-import { setToken, setPermissions } from '../redux/actions';
+import { setToken, setPermissions, bulkConfigsApp } from '../redux/actions';
 
 import redirectByPermissions from 'helpers/redirectByPermissions'
 import loginImage from "assets/img/login-image.jpeg";
@@ -83,6 +83,10 @@ function SignInSide({ t }) {
     (permissions) => dispatch(setPermissions(permissions)),
     [dispatch]
   )
+  const dispatchAppConfigs = React.useCallback(
+    (configs) => dispatch(bulkConfigsApp(configs)),
+    [dispatch]
+  )
 
   const onInputChange = (setter) => (e) => {
     e.preventDefault();
@@ -95,11 +99,12 @@ function SignInSide({ t }) {
     setbtnSubmitText("Ingresar")
   }
 
-  const handleSuccessLogin = (permissions) => {
+  const handleSuccessLogin = ({ user_permissions, ...configs }) => {
     setbtnSubmitText("Ingresando...");
-    dispatchToken(permissions);
-    dispatchPermissions(permissions)
-    window.location.href = redirectByPermissions(permissions);
+    dispatchToken(user_permissions);
+    dispatchPermissions(user_permissions);
+    dispatchAppConfigs(configs);
+    window.location.href = redirectByPermissions(user_permissions);
   }
 
   const handleClick = async (e) => {
