@@ -109,6 +109,7 @@ export default function Sidebar(props) {
         >
           {brand}
           <div className={classes.sidebarWrapper}>
+            <AdminNavbarLinks />
             {links}
           </div>
           {image !== undefined ? (

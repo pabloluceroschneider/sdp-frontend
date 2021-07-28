@@ -34,7 +34,8 @@ const headerLinksStyle = theme => ({
   buttonLink: {
     [theme.breakpoints.down("sm")]: {
       display: "flex",
-      margin: "10px 15px 0",
+      margin: "10px 37px 0",
+      color: 'white',
       width: "-webkit-fill-available",
       "& svg": {
         width: "24px",
