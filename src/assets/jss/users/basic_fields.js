@@ -17,10 +17,25 @@ const styles = {
   },
 
   '@media screen and (max-width: 600px)': {
+    section: {
+      display: 'flex',
+      flexDirection: 'column'
+    },
     form: {
       flexDirection: 'column',
       width: '90%'
-    }
+    },
+    field: {
+      width: '90%'
+    },
+    username: {
+      width: '90%'
+    },
+    icons: {
+      position: 'static',
+      top: 'none',
+      bottom: 'none'
+    },
   }
 }
 
