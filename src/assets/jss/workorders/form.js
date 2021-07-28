@@ -47,6 +47,17 @@ const styles = {
 
 
   '@media screen and (max-width: 600px)': {
+    row: {
+      flexDirection: 'column',
+    },
+    company: { width: '95%', marginTop: 12 },
+    product: { width: '95%', marginTop: 12   },
+    planName: { width: '95%', marginTop: 12   },
+    date: { width: '95%', marginTop: 12   },
+    quantity: { width: '95%', marginTop: 12   },
+    status: { width: '95%', marginTop: 12   },
+    observation: { width: '95%', marginTop: 12   },
+    purchaseOrder: { width: '95%', marginTop: 12   },
     buttonsRow: {
       position: 'static',
       display: 'flex', 
