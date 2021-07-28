@@ -31,7 +31,7 @@ const MyTable = ({ columns, data, onDragAndDrop }) => {
     <table className={classes.container}>
       <thead className={classes.thead}>
         <tr>
-          <td></td>
+          <td style={{width:'4px'}} ></td>
           {columns.map( ({Header, id, width}) => (
             <td style={{width}} key={id}>{Header}</td>
           ))}
