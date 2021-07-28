@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux'
 import MaterialTable from 'material-table';
+import { get, validateObject, InfoError } from 'helpers/tableHelpers';
 import configWoTable from './config_wo_table'
 
 function WorkOrdersTable({ workorders, onClickRow }) {
@@ -8,6 +9,8 @@ function WorkOrdersTable({ workorders, onClickRow }) {
   const lookupcompanies = useSelector(state => state.appData.lookupcompanies);
   const lookupstatus = useSelector(state => state.appData.lookupstatus);
   const optionscompanies = useSelector(state => state.appData.optionscompanies);
+
+  if (!validateObject(lookupcompanies)) return <InfoError value="Empresas" />
 
   return (
     <MaterialTable
@@ -21,7 +24,7 @@ function WorkOrdersTable({ workorders, onClickRow }) {
             var re = new RegExp(term, "g");
             return re.test(optionscompanies[rowData.product?.companyId].name)
           },
-          render: ({product}) => optionscompanies[product?.companyId].name, 
+          render: ({product}) => get(optionscompanies[product?.companyId], 'name'), 
         },
         { 
           title: 'Producto', 

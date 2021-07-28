@@ -9,9 +9,9 @@ import {
 const initialState = {
   companies: [],
   products: [],
-  optionscompanies: {},
-  optionsproducts: {},
-  lookupproducts: {},
+  optionscompanies: null,
+  optionsproducts: null,
+  lookupproducts: null,
   users: [],
   status: [
     { id: "NOT_STARTED",         name: "No comenazada"       },
@@ -22,11 +22,11 @@ const initialState = {
     { id: "FINISHED_WITH_ERROR", name: "Terminada con error" },
   ],
   
-  lookupcompanies: {},
+  lookupcompanies: null,
   lookupusers: {
     'Sin asignar':'Sin asignar'
   },
-  optionsusers: [],
+  optionsusers: null,
   lookupstatus: { 
     NOT_STARTED         : 'No comenzada', 
     IN_PROGRESS         : 'En progreso',
@@ -35,7 +35,7 @@ const initialState = {
     FINISHED            : 'Terminada',
     FINISHED_WITH_ERROR : 'Terminada con error',
   },
-  optionsbaseplans: {},
+  optionsbaseplans: null,
 };
 
 export default function(state = initialState, action) {

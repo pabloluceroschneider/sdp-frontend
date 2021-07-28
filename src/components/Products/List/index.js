@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 import MaterialTable from 'material-table';
 
+import { get, validateObject, InfoError } from 'helpers/tableHelpers';
 import configTasksTable from './config_tasks_table';
 import productService from 'services/productService';
 
@@ -14,6 +15,8 @@ function TasksTable({
   const lookupcompanies = useSelector(state => state.appData.lookupcompanies)
   const [filtering, setfiltering] = useState(false);
 
+  if (!validateObject(optionscompanies)) return <InfoError value="Empresas" />
+
   return ( 
     <MaterialTable
       data={products}
@@ -23,7 +26,7 @@ function TasksTable({
         { 
           title: 'Empresa', 
           field: 'companyId', 
-          render: ({companyId}) => optionscompanies[companyId].name,
+          render: ({companyId}) => get(optionscompanies[companyId], 'name'),
           lookup: lookupcompanies,
           editable: 'never',
           customFilterAndSearch: (term, rowData) => {

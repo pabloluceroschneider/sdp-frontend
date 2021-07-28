@@ -14,6 +14,8 @@ import Alert from '@material-ui/lab/Alert';
 // project components
 import TasksTable from 'components/BasePlans/TasksTable';
 import withTranslation from 'HOCS/withTranslation';
+import { validateObject, InfoError } from 'helpers/tableHelpers';
+
 
 // styles
 import styles from "assets/jss/baseplans/form.js";
@@ -127,6 +129,9 @@ function Form({
     handleTabChange(null, 0, true);
   }
   // <!---------- /actions --------------->
+
+  // conditional render
+  if (!validateObject(optionsproducts)) return <InfoError value="Productos"/>
 
   return (
     <div className={classes.container}>
