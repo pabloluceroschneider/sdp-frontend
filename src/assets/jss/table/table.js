@@ -2,7 +2,7 @@
 const styles = {
   container : { 
     tableLayout: 'fixed',
-    width: '100%',
+    borderCollapse: 'collapse',
   },
   thead: {
     color: 'black',

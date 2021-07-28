@@ -28,15 +28,15 @@ const TasksTable = ({username}) => {
     <div>
       <Table 
         columns={[
-          { Header: 'Nº', id: 'priority', width: '10px' },
-          { Header: 'Empresa', id: 'company', width: '20px' },
-          { Header: 'Producto', id: 'product', width: '60px' },
-          { Header: 'Nº Orden', id: 'batchNumber', width: '8px' },
-          { Header: 'Tarea', id: 'name', width: '15px' },
-          { Header: 'Estado', id: 'status', width: '40px', render: ({status}) => lookupstatus[status] },
-          { Header: 'Inicio', id: 'startDate', width: '15px', render: ({startDate}) => startDate || "--/--/----"  },
-          { Header: 'Última modif.', id: 'lastUpdateDate', width: '15px', render: ({lastUpdateDate}) => lastUpdateDate || "--/--/----"},
-          { Header: 'Completas', id: 'done', width: '20px', render: ({done, quantity}) => `${done} de ${quantity}`},
+          { Header: 'Nº', id: 'priority', width: '3%' },
+          { Header: 'Empresa', id: 'company', width: '10%' },
+          { Header: 'Producto', id: 'product', width: '25%' },
+          { Header: 'Nº Orden', id: 'batchNumber', width: '8%' },
+          { Header: 'Tarea', id: 'name', width: '15%' },
+          { Header: 'Estado', id: 'status', width: '15%', render: ({status}) => lookupstatus[status] },
+          { Header: 'Inicio', id: 'startDate', width: '8%', render: ({startDate}) => startDate || "--/--/----"  },
+          { Header: 'Última modif.', id: 'lastUpdateDate', width: '8%', render: ({lastUpdateDate}) => lastUpdateDate || "--/--/----"},
+          { Header: 'Completas', id: 'done', width: '5%', render: ({done, quantity}) => `${done} de ${quantity}`},
         ]}
         data={tasks}
         onDragAndDrop={onDragAndDrop}
