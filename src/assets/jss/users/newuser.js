@@ -10,6 +10,13 @@ const styles = {
     form: {
       flexDirection: 'column',
       width: '90%'
+    },
+    row: {
+      flexDirection: 'column'
+    },
+    btnSave: {
+      width: '90%',
+      margin: '16px 0 0',
     }
   }
 }
