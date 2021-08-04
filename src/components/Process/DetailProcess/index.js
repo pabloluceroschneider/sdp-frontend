@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import styles from 'assets/jss/process/detail'
@@ -12,7 +13,9 @@ const useStyles = makeStyles(styles);
 
 function DetailProcess({
   data,
-  onCloseDrawer
+  onDrawerClose,
+  onStatusChange,
+  onDoneQuantityChange,
 }){
   const classes = useStyles();
   const optionsStatus = useSelector(state => state.appData.status);
@@ -44,7 +47,7 @@ function DetailProcess({
       }}
       anchor="right" 
       open={Boolean(data)} 
-      onClose={onCloseDrawer}>
+      onClose={onDrawerClose}>
         <div className={classes.container}>
           <div className={classes.info}>
             <div className={classes.header}>
@@ -81,10 +84,10 @@ function DetailProcess({
                 defaultValue={operatorNotes}
                 // onChange={actions.handleInputChange}
                 />
-                <Button className={classes.addNote}>Agregar nota</Button>
+                <Button onClick={onStatusChange} className={classes.addNote}>Cambiar Estado</Button>
             </div>
           </div>
-         
+          <Divider />
           <div className={classes.actionBtns}>
             {startDate 
             ? (
@@ -107,7 +110,7 @@ function DetailProcess({
                   <Button className={classes.allDoneBtn}>Todas</Button>
                 </div>
                 <div className={classes.row}>
-                  <Button fullWidth className={classes.primary}>Registrar</Button>
+                  <Button onClick={onDoneQuantityChange} fullWidth className={classes.primary}>Registrar</Button>
                 </div>
               </div>
             )

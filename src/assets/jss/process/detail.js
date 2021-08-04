@@ -14,7 +14,7 @@ const styles = {
     fontSize: '1.4em',
   },
   info: {
-    height: '55%',
+    height: '50%',
   },
   header: {
     display: 'flex',
@@ -55,7 +55,7 @@ const styles = {
     justifyContent: 'center',
     margin: 'auto',
     width: '100%',
-    height: '35%',
+    height: '40%',
   },
   onWorkingBtns: {
     display: 'flex',
