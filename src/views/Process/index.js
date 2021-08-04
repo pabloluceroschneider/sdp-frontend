@@ -1,24 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // core components
-import Table from 'components/Table';
+import Process from 'components/Process';
+// services 
+import processService from 'services/processService';
+
 
 export default function ProcessView() {
-	return (
-		<Table 
-			columns={[
-				{Header: 'Tarea', id: 'name', width: '50%'},
-				{Header: 'Tarea', id: 'task', width: '50%'},
-			]}
-			data={[
-				{ name: 'tarea 1', task:'tarea 1' },
-				{ name: 'tarea 1', task:'tarea 1' },
-				{ name: 'tarea 1', task:'tarea 1' },
-				{ name: 'tarea 1', task:'tarea 1' },
-				{ name: 'tarea 1', task:'tarea 1' },
-				{ name: 'tarea 1', task:'tarea 1' },
-			]}
-			onDragAndDrop={console.log}
-			/>
-		);
+	const [data, setdata] = useState();
+
+	useEffect(() => {
+    if (data) return;
+		const getData = async () => processService.getTasks().then( 
+			({response}) => setdata(response));
+		getData();
+	},[data]);
+
+	return <Process data={data} />
 }
