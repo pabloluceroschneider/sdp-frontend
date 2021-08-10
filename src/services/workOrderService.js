@@ -45,11 +45,8 @@ workOrderService.create = async ({ workorder, tasks }) => {
 		quantity: workorder.quantity,
 		observation: workorder.observation,
 		purchaseOrder: workorder.purchaseOrder,
-		creationDate: `${new Date().toISOString().slice(0,11) + new Date().toLocaleTimeString()}.000Z`,
+		deliveryDate: workorder.deliveryDate,
 		tasks: bodyTasks
-	}
-	if (workorder.deliveryDate) {
-		body.deliveryDate = `${workorder.deliveryDate}:00.000Z`
 	}
 	const response = await fetch(uri, {
 		method: 'POST',
@@ -74,7 +71,6 @@ workOrderService.create = async ({ workorder, tasks }) => {
 	const uri = `${endpoint}/workorders/${id}`;
 	const { error, loadingBtn, tableData, confirm, planName, newTasks: delet, ...body } = workorder
 	body.status = body.status.id || body.status;
-	body.deliveryDate = body.deliveryDate ?  `${body.deliveryDate}:00.000Z` : null;
 	
 	let response = await fetch(uri, {
 		method: 'PUT',
