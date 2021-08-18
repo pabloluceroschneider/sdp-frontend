@@ -100,12 +100,12 @@ function SignInSide({ t }) {
     setbtnSubmitText("Ingresar")
   }
 
-  const handleSuccessLogin = ({ user_permissions, ...configs }) => {
+  const handleSuccessLogin = ({ me, ...configs }) => {
     setbtnSubmitText("Ingresando...");
-    dispatchToken(user_permissions);
-    dispatchPermissions(user_permissions);
+    dispatchToken(me);
+    dispatchPermissions(me.permissions);
     // dispatchAppConfigs(configs);
-    window.location.href = redirectByPermissions(user_permissions);
+    window.location.href = redirectByPermissions(me.permissions);
   }
 
   const handleClick = async (e) => {
