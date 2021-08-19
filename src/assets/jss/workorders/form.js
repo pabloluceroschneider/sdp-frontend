@@ -33,9 +33,13 @@ const styles = {
     margin: '-2px 1px 0 1px',
     borderTop: '1px solid #ebebeb'
   },
+  leftBtn: {
+    margin: '0 12px',
+  },
   rightBtn: {
     display: 'flex', 
     alignItems: 'center',
+    margin: '0 12px',
   },
   cancelBtn: { margin: '0 16px' },
   error: { color: 'red' },
