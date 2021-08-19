@@ -202,12 +202,14 @@ function Form({
           </div>
         ))}
 
-        <TasksTable 
+        <div className={classes.tasksTable}>
+          <TasksTable 
             data={tasks} 
             quantity={form.quantity} 
             updateTasks={updateTasks}
             {...actions}
             />
+        </div>
       </form>
       <ButtonsToolbarForm
         onSubmit={handleSave}

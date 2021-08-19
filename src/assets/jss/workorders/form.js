@@ -42,6 +42,9 @@ const styles = {
   alert: {
     padding: '0 16px'
   },
+  tasksTable: {
+    marginTop: 12
+  },
 
 
 
