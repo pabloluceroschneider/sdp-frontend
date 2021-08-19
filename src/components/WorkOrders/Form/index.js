@@ -29,7 +29,8 @@ function Form({
     ...formInitValues
 }) {
   const classes = useStyles();
-  const optionsStatus = useSelector(state => state.appData.status)
+  const optionsStatus = useSelector(state => state.appData.status);
+  const optionsUsers = useSelector(state => state.appData.users);
   const lookupstatus = useSelector(state => state.appData.lookupstatus);
   const companies = useSelector(state => state.appData.companies);
   const optionscompanies = useSelector(state => state.appData.optionscompanies);
@@ -191,6 +192,22 @@ function Form({
                 )}
             />}
 
+        </div>
+        
+        <div className={classes.row}>
+          <Autocomplete 
+            label="Responsable" 
+            id="assignedTo"
+            options={optionsUsers}
+            defaultValue={{ username: formInitValues.assignedTo}}
+            onChange={actions.handleAutocompleteChange}
+            getOptionSelected={(option, value) => option.username === value.username}
+            getOptionLabel={option => option.username}
+            className={classes.status}
+            renderInput={(params) => (
+              <TextField {...params} label="Responsable" name="assignedTo" />
+              )}
+            />
         </div>
 
         {warnings?.map( (w) => (

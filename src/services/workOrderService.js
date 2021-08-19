@@ -44,6 +44,7 @@ workOrderService.create = async ({ workorder, tasks }) => {
 		basePlan: workorder.basePlan.name,
 		quantity: workorder.quantity,
 		observation: workorder.observation,
+		assignedTo: workorder.assignedTo.username,
 		purchaseOrder: workorder.purchaseOrder,
 		deliveryDate: workorder.deliveryDate,
 		tasks: bodyTasks
@@ -69,8 +70,10 @@ workOrderService.create = async ({ workorder, tasks }) => {
  */
  workOrderService.update = async ({ id, workorder, tasks }) => {
 	const uri = `${endpoint}/workorders/${id}`;
-	const { error, loadingBtn, tableData, confirm, planName, newTasks: delet, ...body } = workorder
+	let { error, loadingBtn, tableData, confirm, planName, newTasks: delet, ...body } = workorder
+	Object.keys(body).filter( key => !key && delete body[key])
 	body.status = body.status.id || body.status;
+	body.assignedTo = body.assignedTo.username || "Sin Asignar";
 	
 	let response = await fetch(uri, {
 		method: 'PUT',
