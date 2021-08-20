@@ -200,7 +200,7 @@ function Form({
             id="assignedTo"
             options={optionsUsers}
             defaultValue={{ username: formInitValues.assignedTo}}
-            onChange={actions.handleAutocompleteChange}
+            onChange={actions.handleAssignedToChange}
             getOptionSelected={(option, value) => option.username === value.username}
             getOptionLabel={option => option.username}
             className={classes.status}
