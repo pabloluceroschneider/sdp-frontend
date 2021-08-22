@@ -14,11 +14,7 @@ function DetailProcess({ data, onDrawerClose, onStatusChange, onDoneQuantityChan
 	const classes = useStyles();
 	const optionsStatus = useSelector((state) => state.appData.status);
 	const lookupstatus = useSelector((state) => state.appData.lookupstatus);
-	const { _id: id, name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
-
-	const onStart = () => {
-		processService.startTask({ id }).then().catch();
-	};
+	const { name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
 
 	return (
 		<Drawer

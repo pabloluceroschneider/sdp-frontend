@@ -29,7 +29,6 @@ const styles = {
   statusBtn:{
     width: '30%',
     height: '60%',
-    width: 250,
     placeSelf: 'center',
     border: '1px solid #c1c1c1',
   },

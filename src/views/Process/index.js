@@ -12,11 +12,10 @@ export default function ProcessView() {
 	const [data, setdata] = useState();
 
 	useEffect(() => {
-    if (data) return;
 		const getData = async () => processService.getTasks({username}).then( 
 			({response}) => setdata(response));
 		getData();
-	},[data]);
+	},[username]);
 
 	return <Process data={data} />
 }
