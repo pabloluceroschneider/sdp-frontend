@@ -1,22 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import MaterialTable from 'material-table';
 
 function ProcessTable({ 
+  data,
   onRowClick
 }){
-	const process = useSelector(state => state.process.data);
   return ( 
     <MaterialTable
-      data={process}
-      isLoading={!Boolean(process)}
+      data={data}
+      isLoading={!Boolean(data)}
       columns={[
         { title: 'Nº Orden', field: 'batchNumber' },
-        { title: 'Empresa', field: 'company', render: ({company}) => company.name },
-        { title: 'Producto', field: 'product', render: ({product}) => product.name },
-        { title: 'Plano', field: 'basePlan' },
-        // { title: 'Completados', render: ({ done, quantity }) => `${done} de ${quantity}`},
+        { title: 'Empresa', field: 'company' },
+        { title: 'Producto', field: 'product' },
+        { title: 'Tarea', field: 'name' },
+        { title: 'Completados', render: ({ done, quantity }) => `${done} de ${quantity}`},
         { title: 'Estado', field: 'status' },
       ]}
       onRowClick={onRowClick}
