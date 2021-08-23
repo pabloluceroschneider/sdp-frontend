@@ -7,6 +7,8 @@ const styles = {
   thead: {
     color: 'black',
     fontWeight: 400,
+    // borderTop: '1px solid #efefef',
+    borderBottom: '1px solid #efefef',
   },
   tr: {
     display: 'block',
