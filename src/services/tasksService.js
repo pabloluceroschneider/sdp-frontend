@@ -56,7 +56,7 @@ tasksService.createTask = async (body) => {
  * @returns {Array} Tasks
  */
 tasksService.getTasksByWorkorderId = async ({url = endpoint, id}) => {
-	const uri = `${url}/workorders/${id}/tasks`;
+	const uri = `${url}/tasks/workorderId/${id}`;
 
   const tasks = await fetch(uri, {
 		method: 'GET',
