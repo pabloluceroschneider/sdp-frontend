@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useState,useCallback} from 'react';
 
-import ProcessTable from './ProcessTable';
+import TasksTable from './TasksTable';
 import Detail from './DetailProcess';
-import useProcess from './useProcess';
 
-function Process({ data }) {
-	const { state, actions } = useProcess({ tasks: data });
+function Process() {
+	const [selected, setSelected] = useState();
+	const onRowClick = useCallback((_, row) => setSelected(row),[]);
+	const onDrawerClose = useCallback(() => setSelected(),[]);
 
 	return (
 		<div>
-			<ProcessTable />
+			<TasksTable onRowClick={onRowClick} />
+			{selected && <Detail data={selected} onDrawerClose={onDrawerClose}/>}
 		</div>
 	);
 }

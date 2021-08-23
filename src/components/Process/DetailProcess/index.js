@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,7 +15,21 @@ function DetailProcess({ data, onDrawerClose, onStatusChange, onDoneQuantityChan
 	const optionsStatus = useSelector((state) => state.appData.status);
 	const lookupstatus = useSelector((state) => state.appData.lookupstatus);
 	const { name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
-
+	const [ values, setValues ] = useState({
+		operatorNotes: null,
+		doneRegister: 0
+	});
+	const handleInput = (event) => {
+    const id = event.target.name
+    const value = event.target.value;
+    setValues(form => ({ ...form, [id] : value }));
+	}
+	const setDoneRegister = (value) => () => {
+		if (values.doneRegister === 0 && value < 1) return;
+		if (values.doneRegister === quantity && value > 0) return;
+		setValues(form => ({ ...form, doneRegister: form.doneRegister + value }));
+	}
+	
 	return (
 		<Drawer
 			classes={{
@@ -56,7 +70,7 @@ function DetailProcess({ data, onDrawerClose, onStatusChange, onDoneQuantityChan
 						name="operatorNotes"
 						multiline
 						defaultValue={operatorNotes}
-						// onChange={actions.handleInputChange}
+						onChange={handleInput}
 					/>
 					<Button onClick={onStatusChange} className={classes.statusBtn}>
 						Cambiar Estado
@@ -66,22 +80,24 @@ function DetailProcess({ data, onDrawerClose, onStatusChange, onDoneQuantityChan
 				<div className={classes.fsfasfsfa}>
 					<div className={classes.row}>
 						<div className={classes.actionsRow}>
-							<Button className={classes.doneHandlerBtn}>-</Button>
+							<Button className={classes.doneHandlerBtn} onClick={setDoneRegister(-1)}>-</Button>
 							<TextField
 								className={classes.doneRegister}
 								name="doneRegister"
 								type="number"
 								defaultValue={done}
+								value={values.doneRegister}
+								onChange={handleInput}
 								InputProps={{
 									classes: {
 										input: classes.resize
 									}
 								}}
 							/>
-							<Button className={classes.doneHandlerBtn}>+</Button>
+							<Button className={classes.doneHandlerBtn} onClick={setDoneRegister(1)}>+</Button>
 						</div>
 						<div className={classes.actionsRow}>
-							<Button onClick={onDoneQuantityChange} fullWidth className={classes.primary}>
+							<Button onClick={onDoneQuantityChange} fullWidth className={classes.primary} disabled={!Boolean(values.doneRegister)}>
 								Registrar
 							</Button>
 						</div>

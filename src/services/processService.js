@@ -8,7 +8,7 @@ let processService = {};
  *  
  */
 processService.getTasks = async ({username}) => {
-	const uri = `${url}/tasks/assignedTo/${username}`;
+	const uri = `${url}/users/tasks/${username}`;
 
 	const response = await fetch(uri, {
 		method: 'GET',
