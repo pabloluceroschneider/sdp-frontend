@@ -56,7 +56,7 @@ tasksService.createTask = async (body) => {
  * @returns {Array} Tasks
  */
 tasksService.getTasksByWorkorderId = async ({url = endpoint, id}) => {
-	const uri = `${url}/workorders/${id}/tasks`;
+	const uri = `${url}/tasks/workorderId/${id}`;
 
   const tasks = await fetch(uri, {
 		method: 'GET',
@@ -111,6 +111,27 @@ tasksService.getTasksByWorkorderId = async ({url = endpoint, id}) => {
 		redirect: 'follow',
 		referrerPolicy: 'no-referrer',
 		body: JSON.stringify(restBody),
+	}).then(catchResponse);
+	return response;
+}
+
+/**
+ * Update Task by Id
+ * @param {number} id tasksId.
+ * @returns {Array} Tasks
+ */
+ tasksService.upsert = async ({url = endpoint, id, tasks }) => {
+	const uri = `${url}/tasks/bulk/upsert/${id}`;
+  const response = await fetch(uri, {
+		method: 'PUT',
+		mode: 'cors',
+		cache: 'no-cache',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		redirect: 'follow',
+		referrerPolicy: 'no-referrer',
+		body: JSON.stringify(tasks),
 	}).then(catchResponse);
 	return response;
 }
