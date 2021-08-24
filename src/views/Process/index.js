@@ -7,8 +7,6 @@ import Process from 'components/Process';
 // services 
 import processService from 'services/processService';
 
-const fn = err => console.log("err", err)
-
 export default function ProcessView() {
 	const username = useSelector(state => state.auth.token.username);
   const dispatch = useDispatch();
