@@ -5,3 +5,4 @@ export const SET_COMPANIES = "SET_COMPANIES";
 export const SET_USERS = "SET_USERS";
 export const SET_PRODUCTS = "SET_PRODUCTS";
 export const SET_BASEPLANS = "SET_BASEPLANS";
+export const SET_PROCESS = "SET_PROCESS";

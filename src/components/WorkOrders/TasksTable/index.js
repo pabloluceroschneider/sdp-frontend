@@ -46,7 +46,7 @@ function TasksTable({
       columns={[
         { title: 'Nombre', field: 'name', editable: 'onAdd', defaultSort: 'asc'},
         { title: 'Responsable', field: 'assignedTo', lookup: users, initialEditValue: 'Sin asignar' },
-        { title: 'Completas', field: 'done', editable: 'never', initialEditValue: 0 },
+        { title: 'Completas', field: 'done', type: 'numeric', initialEditValue: 0 },
         { 
           title: 'Cantidad', 
           field: 'quantity', 

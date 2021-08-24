@@ -7,8 +7,8 @@ let processService = {};
  * getTasks
  *  
  */
-processService.getTasks = async () => {
-	const uri = `${url}/users/tasks/pablo`;
+processService.getTasks = async ({username}) => {
+	const uri = `${url}/users/tasks/${username}`;
 
 	const response = await fetch(uri, {
 		method: 'GET',
@@ -29,11 +29,8 @@ processService.getTasks = async () => {
  * start Task
  *  
  */
- processService.startTask = async ({ id }) => {
+ processService.updateTask = async ({ id, body }) => {
 	const uri = `${url}/tasks/${id}`;
-
-	const body = {startDate: new Date()};
-
 	const response = await fetch(uri, {
 		method: 'PUT',
 		mode: 'cors',

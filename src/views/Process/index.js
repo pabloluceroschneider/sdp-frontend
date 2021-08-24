@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { storeProcess } from 'redux/actions'
 
 // core components
 import Process from 'components/Process';
@@ -7,14 +9,22 @@ import processService from 'services/processService';
 
 
 export default function ProcessView() {
-	const [data, setdata] = useState();
+	const username = useSelector(state => state.auth.token.username);
+  const dispatch = useDispatch();
+	const dispatchProcess = useCallback((response) => 
+		dispatch(storeProcess(response))
+	,[dispatch])
 
 	useEffect(() => {
-    if (data) return;
-		const getData = async () => processService.getTasks().then( 
-			({response}) => setdata(response));
+		const getData = async () => processService.getTasks({username}).then( 
+			({response}) => dispatchProcess(response));
 		getData();
-	},[data]);
+	},[username, dispatchProcess]);
 
-	return <Process data={data} />
+	const updateDate = useCallback( 
+		async () => processService.getTasks({username}).then( 
+			({response}) => dispatchProcess(response))
+		,[username, dispatchProcess]);
+
+	return <Process updateDate={updateDate} />
 }

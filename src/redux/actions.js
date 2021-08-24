@@ -6,6 +6,7 @@ import {
   SET_COMPANIES,
   SET_PRODUCTS,
   SET_BASEPLANS,
+  SET_PROCESS,
 } from "./actionTypes";
 
 export const setToken = token => ({ type: SET_TOKEN, payload: { token } });
@@ -21,4 +22,6 @@ export const storeCompanies = companies => ({ type: SET_COMPANIES, payload: comp
 export const storeProducts = products => ({ type: SET_PRODUCTS, payload: products });
 
 export const storeBaseplans = baseplans => ({ type: SET_BASEPLANS, payload: baseplans });
+
+export const storeProcess = process => ({ type: SET_PROCESS, payload: process });
 
