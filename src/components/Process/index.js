@@ -15,13 +15,24 @@ function Process({ updateDate }) {
 		processService.updateTask({
 			id,
 			body: values
-		}).then( async ({response}) => {
+		})
+		.then(async (res) => {
+			if(!res) throw Error("Offline")
 			setSelected(s => ({
-				done: response.done,
+				done: res.response.done,
 				...s,
-				...response, 
+				...res.response, 
 			}));
 			await updateDate();
+		})
+		.catch((err) => {
+			if (err.message === "Offline") {
+				console.log({
+					method: 'PUT',
+					endpoint: `/tasks/update/${id}`,
+					body: values
+				})
+			}
 		})
 	,[updateDate]);
 

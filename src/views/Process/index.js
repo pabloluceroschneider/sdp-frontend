@@ -18,7 +18,7 @@ export default function ProcessView() {
 		const getData = async () => 
 		processService.getTasks({username})
 			.then(({response}) => dispatchProcess(response))
-			.catch(() => console.log("err"))
+			.catch(() => console.log("offline mode"))
 		getData();
 	},[username, dispatchProcess]);
 
