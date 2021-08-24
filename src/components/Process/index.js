@@ -23,7 +23,7 @@ function Process({ updateDate }) {
 			}));
 			await updateDate();
 		})
-	,[]);
+	,[updateDate]);
 
 	return (
 		<div>

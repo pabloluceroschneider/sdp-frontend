@@ -24,7 +24,7 @@ export default function ProcessView() {
 	const updateDate = useCallback( 
 		async () => processService.getTasks({username}).then( 
 			({response}) => dispatchProcess(response))
-		,[]);
+		,[username, dispatchProcess]);
 
 	return <Process updateDate={updateDate} />
 }

@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import styles from 'assets/jss/process/detail';
-import processService from 'services/processService';
 const useStyles = makeStyles(styles);
 
 function DetailProcess({ data, onDrawerClose, updateSelected }) {
