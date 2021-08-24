@@ -29,11 +29,8 @@ processService.getTasks = async ({username}) => {
  * start Task
  *  
  */
- processService.startTask = async ({ id }) => {
+ processService.updateTask = async ({ id, body }) => {
 	const uri = `${url}/tasks/${id}`;
-
-	const body = {startDate: new Date()};
-
 	const response = await fetch(uri, {
 		method: 'PUT',
 		mode: 'cors',

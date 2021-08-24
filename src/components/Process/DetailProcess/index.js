@@ -10,24 +10,50 @@ import styles from 'assets/jss/process/detail';
 import processService from 'services/processService';
 const useStyles = makeStyles(styles);
 
-function DetailProcess({ data, onDrawerClose, onStatusChange, onDoneQuantityChange }) {
+function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	const classes = useStyles();
 	const optionsStatus = useSelector((state) => state.appData.status);
 	const lookupstatus = useSelector((state) => state.appData.lookupstatus);
-	const { name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
+	const { _id: id, name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
 	const [ values, setValues ] = useState({
 		operatorNotes: null,
-		doneRegister: 0
+		doneRegister: 0,
 	});
 	const handleInput = (event) => {
     const id = event.target.name
     const value = event.target.value;
     setValues(form => ({ ...form, [id] : value }));
 	}
+	const handleAutocomplete = (event, value) => {
+		const id = event.target.id.split("-")[0];
+    setValues(form => ({ ...form, [id] : value }));
+	}
 	const setDoneRegister = (value) => () => {
-		if (values.doneRegister === 0 && value < 1) return;
-		if (values.doneRegister === quantity && value > 0) return;
+		const actual = values.doneRegister + value;
+		const validRest = quantity - done;
+		if (value > 0 && actual > validRest) return;
+		if (value < 0 && values.doneRegister === 0) return;
 		setValues(form => ({ ...form, doneRegister: form.doneRegister + value }));
+	}
+
+	const onStatusClick = () => {
+		
+		updateSelected(id, {
+			status: values.status.id,
+			operatorNotes: values.operatorNotes,
+		})
+	}
+	
+	const onDoneClick = () => 
+		updateSelected(id, {
+			done: done + values.doneRegister,
+		})
+	const onFinishClick = () => {
+		updateSelected(id, {
+			done: quantity,
+			status: "FINISHED"
+		}).then(() => onDrawerClose());
+		
 	}
 	
 	return (
@@ -49,8 +75,8 @@ function DetailProcess({ data, onDrawerClose, onStatusChange, onDoneQuantityChan
 					<div className={classes.input}>{product}</div>
 				</div>
 				<div className={classes.row}>
-					{observation && <div className={classes.input}>{observation}</div>}
 					<div className={classes.input}>{`${done} completas de ${quantity}`}</div>
+					{observation && <div className={classes.input}>{observation}</div>}
 				</div>
 				<div className={classes.row}>
 					<Autocomplete
@@ -58,7 +84,7 @@ function DetailProcess({ data, onDrawerClose, onStatusChange, onDoneQuantityChan
 						id="status"
 						options={optionsStatus}
 						defaultValue={{ name: lookupstatus[status] }}
-						// onChange={actions.handleInputChange}
+						onChange={handleAutocomplete}
 						getOptionSelected={(option, value) => option.name === value.name}
 						getOptionLabel={(option) => option.name}
 						className={classes.input}
@@ -72,7 +98,7 @@ function DetailProcess({ data, onDrawerClose, onStatusChange, onDoneQuantityChan
 						defaultValue={operatorNotes}
 						onChange={handleInput}
 					/>
-					<Button onClick={onStatusChange} className={classes.statusBtn}>
+					<Button disabled={!Boolean(values.status)} onClick={onStatusClick} className={classes.statusBtn} >
 						Cambiar Estado
 					</Button>
 				</div>
@@ -97,7 +123,7 @@ function DetailProcess({ data, onDrawerClose, onStatusChange, onDoneQuantityChan
 							<Button className={classes.doneHandlerBtn} onClick={setDoneRegister(1)}>+</Button>
 						</div>
 						<div className={classes.actionsRow}>
-							<Button onClick={onDoneQuantityChange} fullWidth className={classes.primary} disabled={!Boolean(values.doneRegister)}>
+							<Button onClick={onDoneClick} fullWidth className={classes.primary} disabled={!Boolean(values.doneRegister)}>
 								Registrar
 							</Button>
 						</div>
@@ -105,7 +131,7 @@ function DetailProcess({ data, onDrawerClose, onStatusChange, onDoneQuantityChan
 					<div className={classes.row}>
 						<div className={classes.emptyActionsRow} />
 						<div className={classes.actionsRow}>
-							<Button onClick={onDoneQuantityChange} fullWidth className={classes.secondary}>
+							<Button onClick={onFinishClick} fullWidth className={classes.secondary}>
 								Finalizar
 							</Button>
 						</div>
