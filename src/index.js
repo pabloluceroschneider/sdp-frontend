@@ -17,7 +17,7 @@ import OperatorLayout from "layouts/Operator.js";
 
 import redirectByPermissions from 'helpers/redirectByPermissions';
 import "assets/css/material-dashboard-react.css?v=1.9.0";
-
+import swDev from "./swDev";
 const hist = createBrowserHistory();
 
 const Routes = () => {
@@ -57,3 +57,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+swDev()

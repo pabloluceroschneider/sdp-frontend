@@ -19,7 +19,9 @@ processService.getTasks = async ({username}) => {
 		},
 		redirect: 'follow',
 		referrerPolicy: 'no-referrer',
-	}).then(catchResponse);
+	})
+	.then(catchResponse)
+	.catch(err => console.warn(err))
 
 	return response;
 };

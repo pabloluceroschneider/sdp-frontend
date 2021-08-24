@@ -7,6 +7,7 @@ import Process from 'components/Process';
 // services 
 import processService from 'services/processService';
 
+const fn = err => console.log("err", err)
 
 export default function ProcessView() {
 	const username = useSelector(state => state.auth.token.username);
@@ -16,14 +17,17 @@ export default function ProcessView() {
 	,[dispatch])
 
 	useEffect(() => {
-		const getData = async () => processService.getTasks({username}).then( 
-			({response}) => dispatchProcess(response));
+		const getData = async () => 
+		processService.getTasks({username})
+			.then(({response}) => dispatchProcess(response))
+			.catch(() => console.log("err"))
 		getData();
 	},[username, dispatchProcess]);
 
 	const updateDate = useCallback( 
-		async () => processService.getTasks({username}).then( 
-			({response}) => dispatchProcess(response))
+		async () => processService.getTasks({username})
+		.then(({response}) => dispatchProcess(response))
+		.catch(() => console.log("err"))
 		,[username, dispatchProcess]);
 
 	return <Process updateDate={updateDate} />
