@@ -37,17 +37,22 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	}
 
 	const onStatusClick = () => {
-		
 		updateSelected(id, {
 			status: values.status.id,
 			operatorNotes: values.operatorNotes,
-		})
+		}).then(() => setValues({
+			operatorNotes: null,
+			doneRegister: 0,
+		}))
 	}
 	
 	const onDoneClick = () => 
 		updateSelected(id, {
 			done: done + values.doneRegister,
-		})
+		}).then(() => setValues({
+			operatorNotes: null,
+			doneRegister: 0,
+		}))
 	const onFinishClick = () => {
 		updateSelected(id, {
 			done: quantity,
