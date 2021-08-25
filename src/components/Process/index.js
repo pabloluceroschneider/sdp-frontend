@@ -13,7 +13,7 @@ function Process({ updateDate }) {
 	const onRowClick = useCallback((_, row) => setSelected(row),[]);
 	const dispatchRequest = useCallback((request) => 
 		dispatch(saveRequest(request))
-	,[]);
+	,[dispatch]);
 	const onDrawerClose = useCallback(
 		() => setSelected()
 		,[]
