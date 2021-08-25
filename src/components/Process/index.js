@@ -1,12 +1,19 @@
-import React, {useState,useCallback} from 'react';
+import React, { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { saveRequest } from 'redux/actions';
 
 import TasksTable from './TasksTable';
 import Detail from './DetailProcess';
+
 import processService from 'services/processService';
 
 function Process({ updateDate }) {
 	const [selected, setSelected] = useState();
+	const dispatch = useDispatch()
 	const onRowClick = useCallback((_, row) => setSelected(row),[]);
+	const dispatchRequest = useCallback((request) => 
+		dispatch(saveRequest(request))
+	,[]);
 	const onDrawerClose = useCallback(
 		() => setSelected()
 		,[]
@@ -27,14 +34,20 @@ function Process({ updateDate }) {
 		})
 		.catch((err) => {
 			if (err.message === "Offline") {
-				console.log({
+				setSelected(s => ({
+					...s,
+					done: values.done,
+				}));
+				const request= {
 					method: 'PUT',
-					endpoint: `/tasks/update/${id}`,
+					endpoint: `tasks/${id}`,
 					body: values
-				})
+				}
+				console.log(request)
+				dispatchRequest(request)
 			}
 		})
-	,[updateDate]);
+	,[updateDate, dispatchRequest]);
 
 	return (
 		<div>

@@ -6,3 +6,5 @@ export const SET_USERS = "SET_USERS";
 export const SET_PRODUCTS = "SET_PRODUCTS";
 export const SET_BASEPLANS = "SET_BASEPLANS";
 export const SET_PROCESS = "SET_PROCESS";
+export const SET_PROCESS_REQUEST = "SET_PROCESS_REQUEST";
+export const SET_FAILED_REQUEST = "SET_FAILED_REQUEST";
