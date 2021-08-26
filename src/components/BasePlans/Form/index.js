@@ -215,7 +215,12 @@ function Form({
           <Button onClick={() => handleTabChange(null, 0)} className={classes.cancelBtn}>
             Cancelar
           </Button>
-          <Button onClick={handleSave} variant="contained" color="primary" className={classes.confirmBtn}>
+          <Button disabled={!Boolean(
+            form.company &&
+            form.product &&
+            form.name &&
+            form.tasks?.length
+            )} onClick={handleSave} variant="contained" color="primary" className={classes.confirmBtn}>
             Guardar
           </Button>
         </div>
