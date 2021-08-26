@@ -24,7 +24,7 @@ export default function(state = initialState, action) {
       const item = state.data.find(t => t._id === object.id)
       const newItem = { ...item, ...object.values }
       const newData = state.data;
-      newData.splice(index, 1, newItem)
+      newData.splice(object.values.tableData.id, 1, newItem)
       return {
         ...state,
         requests: [...requests, request],
