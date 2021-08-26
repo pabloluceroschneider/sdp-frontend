@@ -7,6 +7,7 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import { makeStyles } from "@material-ui/core/styles";
 // core components
 import Navbar from "components/Navbars/Navbar.js";
+import Sidebar from "components/Sidebar/Sidebar.js";
 
 //redux
 import { useSelector } from 'react-redux';
@@ -17,6 +18,9 @@ import styles from "assets/jss/material-dashboard-react/layouts/operatorStyle.js
 
 import ErrorBoundary from 'components/ErrorBoundary'
 import redirectByPermissions from 'helpers/redirectByPermissions'
+
+import logo from "assets/img/logo-sdp.png";
+import image from "assets/img/sidebar-2.jpg";
 
 let ps;
 
@@ -82,6 +86,16 @@ export default function Admin({ ...rest }) {
   }, [mainPanel]);
   return (
     <div className={classes.wrapper}>
+      <Sidebar
+        routes={routes}
+        logoText={"SDP"}
+        logo={logo}
+        image={image}
+        handleDrawerToggle={handleDrawerToggle}
+        open={mobileOpen}
+        color="blue"
+        {...rest}
+      />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
           routes={routes}
