@@ -33,7 +33,7 @@ export default function ProcessView() {
 		getData();
 	},[username, dispatchProcess]);
 
-	const updateDate = useCallback( 
+	const updateData = useCallback( 
 		async () => processService.getTasks({username})
 		.then(({response}) => dispatchProcess(response))
 		.catch(() => console.log("err"))
@@ -64,7 +64,7 @@ export default function ProcessView() {
 							</Button>
 						}
 					/>}
-			<Process updateDate={updateDate} />
+			<Process updateData={updateData} />
 		</>
 	)
 }

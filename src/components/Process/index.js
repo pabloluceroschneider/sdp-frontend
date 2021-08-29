@@ -7,7 +7,7 @@ import Detail from './DetailProcess';
 
 import processService from 'services/processService';
 
-function Process({ updateDate }) {
+function Process({ updateData }) {
 	const [selected, setSelected] = useState();
 	const dispatch = useDispatch()
 	const onRowClick = useCallback((_, row) => setSelected(row),[]);
@@ -30,7 +30,7 @@ function Process({ updateDate }) {
 				...s,
 				...res.response, 
 			}));
-			await updateDate();
+			await updateData();
 		})
 		.catch((err) => {
 			if (err.message === "Offline") {
@@ -47,7 +47,7 @@ function Process({ updateDate }) {
 				dispatchRequest(request)
 			}
 		})
-	,[updateDate, dispatchRequest]);
+	,[updateData, dispatchRequest]);
 
 	return (
 		<div>
