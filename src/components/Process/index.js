@@ -36,7 +36,7 @@ function Process({ updateData }) {
 			if (err.message === "Offline") {
 				setSelected(s => ({
 					...s,
-					done: values.done,
+					done: values.done ? values.done : selected.done,
 				}));
 				const request= {
 					method: 'PUT',
@@ -44,10 +44,10 @@ function Process({ updateData }) {
 					body: values
 				}
 				console.log(request)
-				dispatchRequest(request)
+				dispatchRequest({request, object: {id,values}})
 			}
 		})
-	,[updateData, dispatchRequest]);
+	,[updateData, dispatchRequest, selected]);
 
 	return (
 		<div>

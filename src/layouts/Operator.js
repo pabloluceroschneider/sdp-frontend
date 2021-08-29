@@ -15,11 +15,11 @@ import {operatorRoutes as routes} from "routes.js";
 import styles from "assets/jss/material-dashboard-react/layouts/operatorStyle.js";
 import { makeStyles } from "@material-ui/core/styles";
 
-import image from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/logo-sdp.png";
-
 import ErrorBoundary from 'components/ErrorBoundary'
 import redirectByPermissions from 'helpers/redirectByPermissions'
+
+import logo from "assets/img/logo-sdp.png";
+import image from "assets/img/sidebar-2.jpg";
 
 let ps;
 

@@ -47,8 +47,9 @@ export default function ProcessView() {
 				.then(() => fetched.push(request))
 				.catch(() => failed.push(request))
 		})
-		Promise.all(promiseRequest).then(()=> {
-			return dispatchFailedRequests(failed)
+		Promise.all(promiseRequest).then( async ()=> {
+			await dispatchFailedRequests(failed);
+			await updateData();
 		})
 	}
 
@@ -57,7 +58,7 @@ export default function ProcessView() {
 			{Boolean(requests?.length) && <Alert
 						severity="warning"
 						style={{marginBottom:12}}
-						children={`Hay ${requests.length} acciones sin guardar`}
+						children={`Hay ${requests.length} ${requests.length > 1 ? "acciones" : "acción"} sin guardar`}
 						action={
 							<Button onClick={syncData} color="inherit" size="small">
 								Sincronizar

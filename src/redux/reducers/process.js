@@ -18,10 +18,17 @@ export default function(state = initialState, action) {
       };
     }
     case SET_PROCESS_REQUEST: {
-      const requests = state.requests|| [] 
+      const requests = state.requests|| [];
+      const { request, object } = action.payload;
+      const index = state.data.indexOf(t => t._id === object.id)
+      const item = state.data.find(t => t._id === object.id)
+      const newItem = { ...item, ...object.values }
+      const newData = state.data;
+      newData.splice(index, 1, newItem);
       return {
         ...state,
-        requests: [...requests, action.payload],
+        requests: [...requests, request],
+        data: newData
       };
     }
     case SET_FAILED_REQUEST: {

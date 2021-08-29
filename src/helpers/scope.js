@@ -18,6 +18,6 @@ const domain = {
   "192.168.0.165": ip_localhost,
 }
 
-const scope = param[scopeParam] || domain[hostname] || prod
+const scope = param[scopeParam] || domain[hostname] || localhost
 
 export default scope
