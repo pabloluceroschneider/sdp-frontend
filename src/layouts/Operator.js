@@ -10,7 +10,7 @@ import Hidden from "@material-ui/core/Hidden";
 // core components
 import Navbar from "components/Navbars/Navbar.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import {operatorRoutes as routes} from "routes.js";
+import {adminRoutes as routes} from "routes.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/operatorStyle.js";
 import { makeStyles } from "@material-ui/core/styles";

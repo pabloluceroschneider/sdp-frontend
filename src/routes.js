@@ -2,6 +2,7 @@
 import PermDataSettingIcon from '@material-ui/icons/PermDataSetting';
 import BuildIcon from '@material-ui/icons/Build';
 import BusinessIcon from '@material-ui/icons/Business';
+import BallotIcon from '@material-ui/icons/Ballot';
 import PeopleIcon from '@material-ui/icons/People';
 // core components/views for Admin layout
 import Users from "views/Users";
@@ -13,6 +14,14 @@ import WorkOrders from "views/WorkOrders";
 import ProcessView from "views/Process";
 
 export const adminRoutes = [
+  {
+    path: "/proceso",
+    name: "Proceso",
+    permissions: ['Operario'],
+    icon: BallotIcon,
+    component: ProcessView,
+    layout: "/operario"
+  },
   {
     path: "/ordenes-de-trabajo",
     name: "Ordenes de Trabajo",
@@ -54,14 +63,3 @@ export const adminRoutes = [
     layout: "/admin"
   }
 ];
-
-export const operatorRoutes = [
-  {
-    path: "/proceso",
-    name: "Proceso",
-    permissions: ['Operario'],
-    icon: BuildIcon,
-    component: ProcessView,
-    layout: "/operario"
-  },
-]
