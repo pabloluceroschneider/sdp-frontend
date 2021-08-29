@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
+import Hidden from "@material-ui/core/Hidden";
 import { makeStyles } from "@material-ui/core/styles";
 // core components
 import Navbar from "components/Navbars/Navbar.js";
@@ -86,16 +87,18 @@ export default function Admin({ ...rest }) {
   }, [mainPanel]);
   return (
     <div className={classes.wrapper}>
-      <Sidebar
-        routes={routes}
-        logoText={"SDP"}
-        logo={logo}
-        image={image}
-        handleDrawerToggle={handleDrawerToggle}
-        open={mobileOpen}
-        color="blue"
-        {...rest}
-      />
+      <Hidden mdUp implementation="css">
+        <Sidebar
+          routes={routes}
+          logoText={"SDP"}
+          logo={logo}
+          image={image}
+          handleDrawerToggle={handleDrawerToggle}
+          open={mobileOpen}
+          color="blue"
+          {...rest}
+        />
+      </Hidden>
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
           routes={routes}
