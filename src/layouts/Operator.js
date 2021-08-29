@@ -1,19 +1,22 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+//redux
+import { useSelector } from 'react-redux';
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import Hidden from "@material-ui/core/Hidden";
 // core components
 import Navbar from "components/Navbars/Navbar.js";
-
-//redux
-import { useSelector } from 'react-redux';
-
+import Sidebar from "components/Sidebar/Sidebar.js";
 import {operatorRoutes as routes} from "routes.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/operatorStyle.js";
+import { makeStyles } from "@material-ui/core/styles";
+
+import image from "assets/img/sidebar-2.jpg";
+import logo from "assets/img/logo-sdp.png";
 
 import ErrorBoundary from 'components/ErrorBoundary'
 import redirectByPermissions from 'helpers/redirectByPermissions'
@@ -82,6 +85,18 @@ export default function Admin({ ...rest }) {
   }, [mainPanel]);
   return (
     <div className={classes.wrapper}>
+      <Hidden mdUp implementation="css">
+        <Sidebar
+          routes={routes}
+          logoText={"SDP"}
+          logo={logo}
+          image={image}
+          handleDrawerToggle={handleDrawerToggle}
+          open={mobileOpen}
+          color="blue"
+          {...rest}
+          />
+      </Hidden>
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
           routes={routes}
