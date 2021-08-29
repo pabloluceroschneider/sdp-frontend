@@ -44,6 +44,7 @@ workOrderService.create = async ({ workorder, tasks }) => {
 		basePlan: workorder.basePlan.name,
 		quantity: workorder.quantity,
 		observation: workorder.observation,
+		assignedTo: workorder.assignedTo,
 		purchaseOrder: workorder.purchaseOrder,
 		deliveryDate: workorder.deliveryDate,
 		tasks: bodyTasks
@@ -69,8 +70,11 @@ workOrderService.create = async ({ workorder, tasks }) => {
  */
  workOrderService.update = async ({ id, workorder, tasks }) => {
 	const uri = `${endpoint}/workorders/${id}`;
-	const { error, loadingBtn, tableData, confirm, planName, newTasks: delet, ...body } = workorder
+	let { error, loadingBtn, tableData, confirm, planName, newTasks: del, tasks: delet, ...body } = workorder
+	
+	Object.keys(body).filter( key => !key && delete body[key])
 	body.status = body.status.id || body.status;
+	body.assignedTo = body.assignedTo || "Sin Asignar";
 	
 	let response = await fetch(uri, {
 		method: 'PUT',
@@ -86,22 +90,7 @@ workOrderService.create = async ({ workorder, tasks }) => {
 
 	if (response.error) return response
 
-	let newTasks = tasks
-	.filter( t => t.newTaskOrder > -1)
-	if (!newTasks.length) return response
-
-	newTasks
-	.map( t => {
-		const { newTaskOrder, tableData, ...restTask } = t
-		return tasksService.createTask({
-			workorderId: id,
-			...restTask
-		})
-	})
-	newTasks = await Promise.all(newTasks);
-	newTasks = newTasks.find( r => r.error && r ) || newTasks[0]
-	return newTasks;
-	// return la que tiene error, o la primera (indiferente)
+	return await tasksService.upsert({ id, tasks })
 };
 
 /**

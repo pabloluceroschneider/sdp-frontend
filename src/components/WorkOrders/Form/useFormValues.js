@@ -141,12 +141,20 @@ const useFormValues = ({
     });
   },[dispatch]);
 
+  const handleAssignedToChange = useCallback( (_, value) => { 
+    return dispatch({ 
+      type: 'SET_ASSIGNED_TO', 
+      payload: value
+    });
+  },[dispatch]);
+
   const actions = {
     onRowAdd,
     onRowDelete,
     onRowUpdate,
     handleAutocompleteChange,
     handleInputChange,
+    handleAssignedToChange,
   }
 
   // <!------------------------->

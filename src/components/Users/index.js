@@ -44,7 +44,7 @@ export default function UsersTabs({ users, permissions, getData }) {
         <Tab right label="Crear Usuario" />
         {rowSelected && <Tab label="Usuario y Tareas" />}
       </Tabs>
-      <div style={{overflow: 'scroll'}}>
+      <div style={{overflow: 'scroll', marginBottom: 160}}>
         {content[tabSelected]({
           users,
           permissions,

@@ -6,6 +6,9 @@ import {
   SET_COMPANIES,
   SET_PRODUCTS,
   SET_BASEPLANS,
+  SET_PROCESS,
+  SET_PROCESS_REQUEST,
+  SET_FAILED_REQUEST,
 } from "./actionTypes";
 
 export const setToken = token => ({ type: SET_TOKEN, payload: { token } });
@@ -21,4 +24,10 @@ export const storeCompanies = companies => ({ type: SET_COMPANIES, payload: comp
 export const storeProducts = products => ({ type: SET_PRODUCTS, payload: products });
 
 export const storeBaseplans = baseplans => ({ type: SET_BASEPLANS, payload: baseplans });
+
+export const storeProcess = process => ({ type: SET_PROCESS, payload: process });
+
+export const saveRequest = payload => ({ type: SET_PROCESS_REQUEST, payload: payload });
+
+export const bulkFailedRequests = request => ({ type: SET_FAILED_REQUEST, payload: request });
 

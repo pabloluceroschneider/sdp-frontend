@@ -2,7 +2,7 @@
 const styles = {
   tr: {
     cursor: 'default',
-    borderTop: '1px solid #efefef',
+    borderBottom: '1px solid #efefef',
     height: '48px',
 
 

@@ -1,81 +1,64 @@
-import React, { useReducer, useEffect, useCallback } from 'react'
+import React, { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { saveRequest } from 'redux/actions';
 
-import Table from './ProcessTable'
-import Detail from './DetailProcess'
+import TasksTable from './TasksTable';
+import Detail from './DetailProcess';
 
-const defaultInitialState = {
-  tasks: null,
-  selected: null
-};
+import processService from 'services/processService';
 
-const reducer = (state, action) => {
-  const { type, payload } = action;
-  const actionStrategy = {
-    SET_TASKS : () => ({
-      ...state,
-      tasks: payload,
-    }),
-    SET_SELECTED : () => ({
-      ...state,
-      selected: payload,
-    }),
+function Process({ updateDate }) {
+	const [selected, setSelected] = useState();
+	const dispatch = useDispatch()
+	const onRowClick = useCallback((_, row) => setSelected(row),[]);
+	const dispatchRequest = useCallback((request) => 
+		dispatch(saveRequest(request))
+	,[dispatch]);
+	const onDrawerClose = useCallback(
+		() => setSelected()
+		,[]
+	);
+	const updateSelected = useCallback((id, values) =>
+		processService.updateTask({
+			id,
+			body: values
+		})
+		.then(async (res) => {
+			if(!res) throw Error("Offline")
+			setSelected(s => ({
+				done: res.response.done,
+				...s,
+				...res.response, 
+			}));
+			await updateDate();
+		})
+		.catch((err) => {
+			if (err.message === "Offline") {
+				setSelected(s => ({
+					...s,
+					done: values.done ? values.done : selected.done,
+				}));
+				const request= {
+					method: 'PUT',
+					endpoint: `tasks/${id}`,
+					body: values
+				}
+				console.log(request)
+				dispatchRequest({request, object: {id,values}})
+			}
+		})
+	,[updateDate, dispatchRequest, selected]);
 
-  }
-  return actionStrategy[type]() || state;
+	return (
+		<div>
+			<TasksTable onRowClick={onRowClick} />
+			{selected && <Detail 
+			data={selected} 
+			onDrawerClose={onDrawerClose} 
+			updateSelected={updateSelected}
+			/>}
+		</div>
+	);
 }
 
-const useProcess = ({ tasks }) => {
-  const [state, dispatch] = useReducer(reducer, {
-    ...defaultInitialState,
-    tasks
-  });
-
-  useEffect(() => {
-    dispatch({ type: 'SET_TASKS', payload: tasks });
-  }, [state.tasks, tasks])
-
-  const onRowClick = useCallback((_, payload) => 
-    dispatch({ type: 'SET_SELECTED', payload })
-    ,[])
-
-  const onDrawerClose = useCallback(() => 
-    dispatch({ type: 'SET_SELECTED', payload: null })
-    ,[])
-  
-  const onStatusChange = useCallback(() => 
-    dispatch({ type: 'SET_SELECTED', payload: null })
-    ,[])
-
-  const onDoneQuantityChange = useCallback(() => 
-    dispatch({ type: 'SET_SELECTED', payload: null })
-    ,[])
-
-  const actions = {
-    onRowClick,
-    onDrawerClose,
-    onStatusChange,
-    onDoneQuantityChange,
-  };
-
-  return { state, actions }
-}
-
-function Process({data}) {
-  const { state, actions } = useProcess({tasks: data});
-
-  return (
-    <div>
-      <Table data={state.tasks} onRowClick={actions.onRowClick} />
-      {state.selected && 
-        <Detail 
-          data={state.selected}
-          onDrawerClose={actions.onDrawerClose}
-          onStatusChange={actions.onStatusChange}
-          onDoneQuantityChange={actions.onDoneQuantityChange}
-          />
-      }
-    </div>
-  )
-}
-
-export default Process
+export default Process;
