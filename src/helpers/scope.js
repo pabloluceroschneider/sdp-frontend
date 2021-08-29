@@ -18,6 +18,6 @@ const domain = {
   localhost
 }
 
-const scope = param[scopeParam] || domain[hostname] || localhost
+const scope = param[scopeParam] || domain[hostname] || prod
 
 export default scope
