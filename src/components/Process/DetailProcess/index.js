@@ -15,7 +15,7 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	const lookupstatus = useSelector((state) => state.appData.lookupstatus);
 	const { _id: id, name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
 	const [ values, setValues ] = useState({
-		operatorNotes: null,
+		operatorNotes: operatorNotes,
 		doneRegister: 0,
 	});
 	const handleInput = (event) => {
@@ -36,6 +36,7 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	}
 
 	const onStatusClick = () => {
+		console.log(`values`, values)
 		updateSelected(id, {
 			status: values.status.id,
 			operatorNotes: values.operatorNotes,

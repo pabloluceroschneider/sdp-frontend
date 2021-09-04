@@ -1,6 +1,6 @@
 console.warn('service worker public folder');
 
-let cacheData = 'app-v0.1';
+let cacheData = 'app-2021-08-30';
 
 this.addEventListener('install', (event) => {
 	event.waitUntil(
