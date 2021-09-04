@@ -1,6 +1,6 @@
 console.warn('service worker public folder');
 
-let cacheData = 'app-v0.1';
+let cacheData = 'app-2021-08-30';
 
 this.addEventListener('install', (event) => {
 	event.waitUntil(
@@ -10,9 +10,9 @@ this.addEventListener('install', (event) => {
 				'/static/js/main.chunk.js',
 				'/static/js/0.chunk.js',
 				'/index.html',
+				'/',
 				'/operario/proceso',
         'chartist.min.js',
-        'firebase-app.js',
         'init.js',
 			]);
 		})
