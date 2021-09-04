@@ -16,51 +16,54 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	const { _id: id, name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
 	const [ values, setValues ] = useState({
 		operatorNotes: operatorNotes,
-		doneRegister: 0,
+		doneRegister: 0
 	});
 	const handleInput = (event) => {
-    const id = event.target.name
-    const value = event.target.value;
-    setValues(form => ({ ...form, [id] : value }));
-	}
+		const id = event.target.name;
+		const value = event.target.value;
+		setValues((form) => ({ ...form, [id]: value }));
+	};
 	const handleAutocomplete = (event, value) => {
-		const id = event.target.id.split("-")[0];
-    setValues(form => ({ ...form, [id] : value }));
-	}
+		const id = event.target.id.split('-')[0];
+		setValues((form) => ({ ...form, [id]: value }));
+	};
 	const setDoneRegister = (value) => () => {
 		const actual = values.doneRegister + value;
 		const validRest = quantity - done;
 		if (value > 0 && actual > validRest) return;
 		if (value < 0 && values.doneRegister === 0) return;
-		setValues(form => ({ ...form, doneRegister: form.doneRegister + value }));
-	}
+		setValues((form) => ({ ...form, doneRegister: form.doneRegister + value }));
+	};
 
 	const onStatusClick = () => {
-		console.log(`values`, values)
+		console.log(`values`, values);
 		updateSelected(id, {
 			status: values.status.id,
-			operatorNotes: values.operatorNotes,
-		}).then(() => setValues({
-			operatorNotes: null,
-			doneRegister: 0,
-		}))
-	}
-	
-	const onDoneClick = () => 
+			operatorNotes: values.operatorNotes
+		}).then(() =>
+			setValues({
+				operatorNotes: null,
+				doneRegister: 0
+			})
+		);
+	};
+
+	const onDoneClick = () =>
 		updateSelected(id, {
-			done: done + values.doneRegister,
-		}).then(() => setValues({
-			operatorNotes: null,
-			doneRegister: 0,
-		}))
+			done: done + values.doneRegister
+		}).then(() =>
+			setValues({
+				operatorNotes: null,
+				doneRegister: 0
+			})
+		);
 	const onFinishClick = () => {
 		updateSelected(id, {
 			done: quantity,
-			status: "FINISHED"
+			status: 'FINISHED'
 		}).then(() => onDrawerClose());
-		
-	}
-	
+	};
+
 	return (
 		<Drawer
 			classes={{
@@ -73,17 +76,28 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 			<div className={classes.container}>
 				<div className={classes.header}>
 					<div className={classes.name}>{name}</div>
-					<div className={classes.batchNumber}>{batchNumber}</div>
-				</div>
-				<div className={classes.row}>
-					<div className={classes.input}>{company}</div>
-					<div className={classes.input}>{product}</div>
-				</div>
-				<div className={classes.row}>
 					<div className={classes.input}>{`${done} completas de ${quantity}`}</div>
-					{observation && <div className={classes.input}>{observation}</div>}
 				</div>
 				<div className={classes.row}>
+					<div className={classes.smallInput}>{company}</div>
+					<div className={classes.smallInput}>{product}</div>
+					<div className={classes.smallInput}>nº Orden: {batchNumber}</div>
+				</div>
+				{observation && (
+					<div className={classes.row}>
+						<div className={classes.input}>{observation}</div>
+					</div>
+				)}
+
+				<div className={classes.row}>
+					<TextField
+						className={classes.operatorNotes}
+						label="Agregar Notas del operador"
+						name="operatorNotes"
+						multiline
+						defaultValue={operatorNotes}
+						onChange={handleInput}
+					/>
 					<Autocomplete
 						label="Estado"
 						id="status"
@@ -92,55 +106,50 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 						onChange={handleAutocomplete}
 						getOptionSelected={(option, value) => option.name === value.name}
 						getOptionLabel={(option) => option.name}
-						className={classes.input}
+						className={classes.status}
 						renderInput={(params) => <TextField {...params} label="Estado" name="status" />}
 					/>
-					<TextField
-						className={classes.input}
-						label="Agregar Notas del operador"
-						name="operatorNotes"
-						multiline
-						defaultValue={operatorNotes}
-						onChange={handleInput}
-					/>
-					<Button disabled={!Boolean(values.status)} onClick={onStatusClick} className={classes.statusBtn} >
-						Cambiar Estado
+				</div>
+
+				<div className={classes.row}>
+					<Button onClick={onStatusClick} className={classes.statusBtn}>
+						En progreso
+					</Button>
+					<Button onClick={onStatusClick} className={classes.statusBtn}>
+						Pausado
+					</Button>
+					<Button onClick={onStatusClick} className={classes.statusBtn}>
+						Terminado
 					</Button>
 				</div>
 
-				<div className={classes.fsfasfsfa}>
-					<div className={classes.row}>
-						<div className={classes.actionsRow}>
-							<Button className={classes.doneHandlerBtn} onClick={setDoneRegister(-1)}>-</Button>
-							<TextField
-								className={classes.doneRegister}
-								name="doneRegister"
-								type="number"
-								defaultValue={done}
-								value={values.doneRegister}
-								onChange={handleInput}
-								InputProps={{
-									classes: {
-										input: classes.resize
-									}
-								}}
-							/>
-							<Button className={classes.doneHandlerBtn} onClick={setDoneRegister(1)}>+</Button>
-						</div>
-						<div className={classes.actionsRow}>
-							<Button onClick={onDoneClick} fullWidth className={classes.primary} disabled={!Boolean(values.doneRegister)}>
-								Registrar
-							</Button>
-						</div>
+				<div className={classes.row}>
+					<div className={classes.actionsRow}>
+						<Button className={classes.doneHandlerBtn} onClick={setDoneRegister(-1)}>
+							-
+						</Button>
+						<TextField
+							className={classes.doneRegister}
+							name="doneRegister"
+							type="number"
+							defaultValue={done}
+							value={values.doneRegister}
+							onChange={handleInput}
+							InputProps={{
+								classes: {
+									input: classes.resize
+								}
+							}}
+						/>
+						<Button className={classes.doneHandlerBtn} onClick={setDoneRegister(1)}>
+							+
+						</Button>
 					</div>
-					<div className={classes.row}>
-						<div className={classes.emptyActionsRow} />
-						<div className={classes.actionsRow}>
-							<Button onClick={onFinishClick} fullWidth className={classes.secondary}>
-								Finalizar
-							</Button>
-						</div>
-					</div>
+				</div>
+				<div className={classes.row}>
+					<Button fullWidth onClick={onStatusClick} className={classes.success}>
+						Registrar
+					</Button>
 				</div>
 			</div>
 		</Drawer>
