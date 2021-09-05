@@ -17,29 +17,40 @@ function reducer(state, action){
 			[payload.id] : payload.value,
 		}),
 		SET_DONE: () => {
-			const value = Number(payload);
-			const nextDone = Number(state.done) + value;
-			if (nextDone > state.quantity) {
+			const upLimit = Number(state.doneRegister) + Number(state.done) + payload;
+			const downLimit = Number(state.doneRegister) + payload
+			if (upLimit > state.quantity) {
 				return state
 			}
-			if (nextDone < 0) {
+			if (downLimit < 0){
 				return state
 			}
 			return {
 				...state,
-				done: nextDone,
+				doneRegister: state.doneRegister + payload,
 			}
 		},
+		SET_INPUT_DONE: () => ({
+			...state,
+			doneRegister: payload,
+		}),
 		SET_STATUS: () => ({
 			...state,
 			status: payload,
 		}),
+		RESET_VALUES: () => ({
+			...state,
+			doneRegister: 0
+		})
 	}
 	return actionStrategy[type]() || state;
 }
 
 const useDetailProcess = (initialState) => {
-	const [values, dispatch] = useReducer(reducer, initialState);
+	const [values, dispatch] = useReducer(reducer, {
+		...initialState, 
+		doneRegister: null
+	});
 
 	const handleInput = (event) => {
 		const id = event.target.name;
@@ -50,7 +61,7 @@ const useDetailProcess = (initialState) => {
 		const id = event.target.id.split('-')[0];
 		return dispatch({type:'SET_INPUT', payload: { id, value } });
 	};
-	const resetValues = p => console.log("P", p);
+	const resetValues = () => dispatch({ type: 'RESET_VALUES' });
 
 	const setDone = (value) => () => 
 		dispatch({
@@ -60,8 +71,8 @@ const useDetailProcess = (initialState) => {
 	const onStatusChange = (status) => () => {
 		const statusStrategy = {
 			'IN_PROGRESS': { id: 'IN_PROGRESS', name: 'En Progreso' },
-			'PAUSED': { id: 'PAUSED', name: 'Pausado' },
-			'FINISHED': { id: 'FINISHED', name: 'Finalizado' },
+			'PAUSED': { id: 'PAUSED', name: 'Pausada' },
+			'FINISHED': { id: 'FINISHED', name: 'Finalizada' },
 		};
 		return dispatch({
 			type: 'SET_STATUS',
@@ -69,10 +80,21 @@ const useDetailProcess = (initialState) => {
 		})
 	}
 
+	const handleDoneInput = (event) => {
+		const value = Number(event.target.value);
+		console.log(`value`, value);
+		return dispatch({
+			type: 'SET_INPUT_DONE',
+			payload: value
+		});
+		
+	};
+
 	const actions = {
 		handleInput,
 		handleAutocomplete,
 		setDone,
+		handleDoneInput,
 		onStatusChange,
 		resetValues
 	};
@@ -82,7 +104,7 @@ const useDetailProcess = (initialState) => {
 		actions,
 		body: {
 			status: values.status.id,
-			done: values.done,
+			done: values.done + values.doneRegister,
 			operatorNotes: values.operatorNotes,
 		}
 	};
@@ -94,7 +116,7 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	const lookupstatus = useSelector((state) => state.appData.lookupstatus);
 	const { _id: id, name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
 	const { values, actions, body } = useDetailProcess({...data, status: { id: status, name: lookupstatus[status]}});
-	const { handleInput, handleAutocomplete, resetValues, setDone, onStatusChange } = actions;
+	const { handleInput, handleAutocomplete, handleDoneInput, resetValues, setDone, onStatusChange } = actions;
 
 	const onRegister = () => {
 		updateSelected(id, body).then(resetValues)
@@ -168,9 +190,11 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 							className={classes.done}
 							name="done"
 							type="number"
-							defaultValue={done}
-							value={values.done}
-							onChange={handleInput}
+							placeholder={0}
+							value={values.doneRegister}
+							error={values.doneRegister > (values.quantity - values.done)}
+							helperText={values.doneRegister > (values.quantity - values.done) ? "Error" : null}
+							onChange={handleDoneInput}
 							InputProps={{
 								classes: {
 									input: classes.resize
