@@ -1,21 +1,19 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+//redux
+import { useSelector } from 'react-redux';
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
 import Hidden from "@material-ui/core/Hidden";
-import { makeStyles } from "@material-ui/core/styles";
 // core components
 import Navbar from "components/Navbars/Navbar.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-
-//redux
-import { useSelector } from 'react-redux';
-
-import {operatorRoutes as routes} from "routes.js";
+import {adminRoutes as routes} from "routes.js";
 
 import styles from "assets/jss/material-dashboard-react/layouts/operatorStyle.js";
+import { makeStyles } from "@material-ui/core/styles";
 
 import ErrorBoundary from 'components/ErrorBoundary'
 import redirectByPermissions from 'helpers/redirectByPermissions'
@@ -97,7 +95,7 @@ export default function Admin({ ...rest }) {
           open={mobileOpen}
           color="blue"
           {...rest}
-        />
+          />
       </Hidden>
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
