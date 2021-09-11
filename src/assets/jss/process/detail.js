@@ -10,44 +10,57 @@ const styles = {
     flexShrink: 0,
   },
   container: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     height: '100vh',
     fontSize: '1.4em',
+    padding: 24,
   },
   info: {
     height: '50%',
   },
   header: {
     display: 'flex',
-    justifyContent: 'space-between',
-    margin: '32px'
+    alignItems: 'baseline',
+    justifyContent: 'space-evenly'
   },
   row: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
+    borderBottom: '1px solid #e6e6e6',
+    paddingBottom: 36,
   },
   statusBtn:{
-    width: '30%',
-    height: '60%',
+    width: '100%',
+    height: '100%',
+    margin: '0 8px',
     placeSelf: 'center',
     border: '1px solid #c1c1c1',
   },
   input:{
-    margin: '24px',
     lineHeight: '1.1',
-    width: '40%'
+  },
+  smallInput:{
+    fontSize: '.8em',
+    lineHeight: '1.1',
+  },
+  status:{
+    lineHeight: '1.1',
+    width: '50%',
+    margin: '0 4px',
+  },
+  operatorNotes: {
+    lineHeight: '1.1',
+    width: '100%',
+    margin: '0 4px',
   },
   name: {
     fontSize: '1.5em',
     lineHeight: '1em',
   },
-  operatorNotes: {
-    width: '100%',
-    margin: '0 32px',
-    justifyContent: 'center',
-  },
   doneRegister: {
-    width: '30%',
     justifyContent: 'flex-end',
   },
   resize: {
@@ -58,11 +71,6 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     margin: 'auto',
-    width: '50%',
-    height: '30%',
-  },
-  emptyActionsRow : {
-    width: '50%',
   },
   onWorkingBtns: {
     display: 'flex',
@@ -70,14 +78,11 @@ const styles = {
     justifyContent: 'space-evenly',
     alignItems: 'center',
     margin: 'auto',
-    width: '60%',
-    height: '100%',
     fontSize: '3em'
   },
-  primary: {
+  success: {
     color: 'white',
-    height: '60%',
-    width: 250,
+    fontSize: '1.5em',
     placeSelf: 'center',
     background: '#52c41a',
     '&:hover':{
@@ -85,30 +90,24 @@ const styles = {
       background: '#52c41a75',
     }
   },
-  secondary: {
-    height: '60%',
-    width: 250,
-    margin: '48px 0',
-    placeSelf: 'center',
-    border: '1px solid #c1c1c1',
-    '&:hover':{
-    }
-  },
   doneHandlerBtn:{
     fontSize: '1em',
     margin: '0 12px',
     border: '1px solid #c1c1c1',
   },
-  fsfasfsfa: {
-    marginTop: 64
-  },
 
   '@media screen and (max-width: 600px)': {
     container: {
-      height: 'auto'
+      height: 'auto',
+      padding: 12,
+    },
+    header: {
+      display: 'flex',
+      flexDirection: 'column',
     },
     row: { 
-      flexDirection: 'column',  
+      flexDirection: 'column',
+      padding: 12,
       width: '100%',
       border: '1px solid #ededed',
       marginBottom: 24,
@@ -117,7 +116,7 @@ const styles = {
       width: '85%' 
     },
     statusBtn: {
-      width: '85%',
+      // width: '85%',
       margin: '0 4px',
       alignSelf: 'center',
       marginBottom: 24,
