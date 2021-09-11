@@ -70,7 +70,7 @@ const useDetailProcess = (initialState) => {
 		});
 	const onStatusChange = (status) => () => {
 		const statusStrategy = {
-			'IN_PROGRESS': { id: 'IN_PROGRESS', name: 'En Progreso' },
+			'IN_PROGRESS': { id: 'IN_PROGRESS', name: 'En progreso' },
 			'PAUSED': { id: 'PAUSED', name: 'Pausada' },
 			'FINISHED': { id: 'FINISHED', name: 'Finalizada' },
 		};
@@ -174,10 +174,10 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 						En progreso
 					</Button>
 					<Button onClick={onStatusChange("PAUSED")} className={classes.statusBtn}>
-						Pausado
+						Pausada
 					</Button>
 					<Button onClick={onStatusChange("FINISHED")} className={classes.statusBtn}>
-						Terminado
+						Finalizada
 					</Button>
 				</div>
 
