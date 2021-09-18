@@ -40,6 +40,9 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+  const handleMisDatosClick = () => {
+    window.location = "/mis-datos";
+  };
   return (
     <div>
       <div className={classes.manager}>
@@ -78,7 +81,7 @@ export default function AdminNavbarLinks() {
                   placement === "bottom" ? "center top" : "center bottom"
               }}
             >
-              <Paper>
+              <Paper style={{ display: 'flex' }}>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     <MenuItem
@@ -86,6 +89,12 @@ export default function AdminNavbarLinks() {
                       className={classes.dropdownItem}
                     >
                       Cerrar Sesión
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleMisDatosClick}
+                      className={classes.dropdownItem}
+                    >
+                      Mis Datos
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
