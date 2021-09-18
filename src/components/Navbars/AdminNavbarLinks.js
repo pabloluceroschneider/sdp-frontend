@@ -40,6 +40,9 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+  const handleMisDatosClick = () => {
+    window.location = "/mis-datos";
+  };
   return (
     <div>
       <div className={classes.manager}>
@@ -88,7 +91,7 @@ export default function AdminNavbarLinks() {
                       Cerrar Sesión
                     </MenuItem>
                     <MenuItem
-                      onClick={dispatchLogout}
+                      onClick={handleMisDatosClick}
                       className={classes.dropdownItem}
                     >
                       Mis Datos
