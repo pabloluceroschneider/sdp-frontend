@@ -44,7 +44,7 @@ function Process({ updateData }) {
 		}
 	};
 
-	const updateSelected = useCallback((id, values) =>
+	const updateSelected = (id, values) =>
 		processService.updateTask({
 			id,
 			body: values
@@ -54,8 +54,7 @@ function Process({ updateData }) {
 		.then(() => Promise.resolve({
 			...selected,
 			done: values.done ? values.done : selected.done,
-		}))
-	,[updateData, dispatchRequest, selected]);
+		}));
 
 	return (
 		<div>
