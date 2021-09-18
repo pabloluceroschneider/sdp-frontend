@@ -32,7 +32,7 @@ authService.login = async ({ body, url = endpoint }) => {
  * @param {Id} id 
  * @param {String} url optional - default const const endpoint = 'http://localhost:8080';
  */
- authService.updatePassword = async ({ password, id = "611d858924985319f678d395", url = endpoint }) => {
+ authService.updatePassword = async ({ password, id, url = endpoint }) => {
 	const uri = `${url}/users/${id}`;
 	const body = { password };
 
