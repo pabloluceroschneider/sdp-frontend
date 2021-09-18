@@ -47,15 +47,13 @@ export default function ProcessView() {
 		,[username, dispatchProcess]);
 	
 	const syncData = () => {
-		console.log(`pendings`, pendings)
-		let fetched = [];
-		let failed = []
+		let fetched = {};
+		let failed = {}
 		const promiseRequest = pendings.map( request => {
-			console.log(`request`, request)
 			const [ id, body ] = request;
 			return syncService.update({id, body})
-				.then(() => fetched.push(request))
-				.catch(() => failed.push(request))
+				.then(() => fetched[id] = body )
+				.catch(() => failed[id] = body)
 		})
 		Promise.all(promiseRequest).then( async ()=> {
 			await dispatchFailedRequests(failed);
