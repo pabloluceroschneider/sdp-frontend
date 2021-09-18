@@ -5,10 +5,10 @@ let syncService = {};
 /**
  * syncService
  */
-syncService.update = async ({ method, endpoint, body}) => {
-	const uri = `${url}/${endpoint}`;
+syncService.update = async ({ id, body }) => {
+	const uri = `${url}/tasks/${id}`;
 	const response = await fetch(uri, {
-		method: method,
+		method: 'PUT',
 		mode: 'cors',
 		cache: 'no-cache',
 		headers: {

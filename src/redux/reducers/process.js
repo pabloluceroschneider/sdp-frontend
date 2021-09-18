@@ -18,11 +18,11 @@ export default function(state = initialState, action) {
       };
     }
     case SET_PROCESS_REQUEST: {
-      const requests = state.requests|| [];
-      const { request, object } = action.payload;
+      const { id, body } = action.payload;
+      console.log(`action.payload`, action.payload)
 
-      const item = state.data.find(t => t._id === object.id);
-      const newItem = { ...item, ...object.values };
+      const item = state.data.find(t => t._id === id);
+      const newItem = { ...item, ...body };
       const index = item.tableData.id;
 
       const newData = state.data;
@@ -30,7 +30,10 @@ export default function(state = initialState, action) {
 
       return {
         ...state,
-        requests: [...requests, request],
+        requests: {
+          ...state.requests,
+          [id]: body,
+        },
         data: newData
       };
     }

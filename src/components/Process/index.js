@@ -18,35 +18,43 @@ function Process({ updateData }) {
 		() => setSelected()
 		,[]
 	);
+
+	const then = async (res) => {
+		if(!res) throw Error("Offline")
+		setSelected(s => ({
+			done: res.response.done,
+			...s,
+			...res.response, 
+		}));
+		await updateData();
+	};
+
+	const catchE = (values, id) => (err) => {
+		if (err.message === "Offline") {
+			setSelected(s => ({
+				...s,
+				done: values.done ? values.done : selected.done,
+			}));
+			const body = {
+				done: values.done ? values.done : selected.done,
+				status: values.status ? values.status : selected.status,
+				operatorNotes: values.operatorNotes,
+			}
+			dispatchRequest({ id, body })
+		}
+	};
+
 	const updateSelected = useCallback((id, values) =>
 		processService.updateTask({
 			id,
 			body: values
 		})
-		.then(async (res) => {
-			if(!res) throw Error("Offline")
-			setSelected(s => ({
-				done: res.response.done,
-				...s,
-				...res.response, 
-			}));
-			await updateData();
-		})
-		.catch((err) => {
-			if (err.message === "Offline") {
-				setSelected(s => ({
-					...s,
-					done: values.done ? values.done : selected.done,
-				}));
-				const request= {
-					method: 'PUT',
-					endpoint: `tasks/${id}`,
-					body: values
-				}
-				console.log(request)
-				dispatchRequest({request, object: {id,values}})
-			}
-		})
+		.then(then)
+		.catch(catchE(values, id))
+		.then(() => Promise.resolve({
+			...selected,
+			done: values.done ? values.done : selected.done,
+		}))
 	,[updateData, dispatchRequest, selected]);
 
 	return (

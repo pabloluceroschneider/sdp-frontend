@@ -40,7 +40,8 @@ function reducer(state, action){
 		}),
 		RESET_VALUES: () => ({
 			...state,
-			doneRegister: 0
+			...payload,
+			doneRegister: 0,
 		})
 	}
 	return actionStrategy[type]() || state;
@@ -61,7 +62,7 @@ const useDetailProcess = (initialState) => {
 		const id = event.target.id.split('-')[0];
 		return dispatch({type:'SET_INPUT', payload: { id, value } });
 	};
-	const resetValues = () => dispatch({ type: 'RESET_VALUES' });
+	const resetValues = (payload) => dispatch({ type: 'RESET_VALUES', payload });
 
 	const setDone = (value) => () => 
 		dispatch({
@@ -117,7 +118,7 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	const { _id: id, name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
 	const { values, actions, body } = useDetailProcess({...data, status: { id: status, name: lookupstatus[status]}});
 	const { handleInput, handleAutocomplete, handleDoneInput, resetValues, setDone, onStatusChange } = actions;
-
+	console.log(`values`, values)
 	const onRegister = () => {
 		updateSelected(id, body).then(resetValues)
 	};
