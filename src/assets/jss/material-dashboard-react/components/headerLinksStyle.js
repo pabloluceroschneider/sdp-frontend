@@ -98,10 +98,13 @@ const headerLinksStyle = theme => ({
   },
   manager: {
     [theme.breakpoints.down("sm")]: {
-      width: "100%"
+      width: "100%",
     },
     display: "flex",
-    alignItems: 'center'
+    alignItems: 'center',
+    '@media screen and (max-width: 800px)': {
+      flexDirection: "column",
+    }
   },
   fullname: {
     margin: '0 8px',

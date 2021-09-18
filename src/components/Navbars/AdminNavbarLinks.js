@@ -78,7 +78,7 @@ export default function AdminNavbarLinks() {
                   placement === "bottom" ? "center top" : "center bottom"
               }}
             >
-              <Paper>
+              <Paper style={{ display: 'flex' }}>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     <MenuItem
@@ -86,6 +86,12 @@ export default function AdminNavbarLinks() {
                       className={classes.dropdownItem}
                     >
                       Cerrar Sesión
+                    </MenuItem>
+                    <MenuItem
+                      onClick={dispatchLogout}
+                      className={classes.dropdownItem}
+                    >
+                      Mis Datos
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
