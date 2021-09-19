@@ -19,6 +19,7 @@ import syncService from 'services/syncService';
 export default function ProcessView() {
 	const username = useSelector(state => state.auth.token.username);
 	const requests = useSelector(state => state.process.requests);
+	const history = useSelector(state => state.process.history);
 	const [pendings, setpendings] = useState([]);
   const dispatch = useDispatch();
 	const dispatchFailedRequests = (request) => dispatch(bulkFailedRequests(request))
@@ -53,11 +54,13 @@ export default function ProcessView() {
 			const [ id, body ] = request;
 			return syncService.update({id, body})
 				.then(() => fetched[id] = body )
-				.catch(() => failed[id] = body)
+				.catch(() => Promise.reject())
 		})
 		Promise.all(promiseRequest).then( async ()=> {
-			await dispatchFailedRequests(failed);
+			await dispatchFailedRequests();
 			await updateData();
+		}).then(() => {
+			syncService.historyStamp({ history })
 		})
 	}
 

@@ -39,6 +39,8 @@ function Process({ updateData }) {
 				done: values.done ? values.done : selected.done,
 				status: values.status ? values.status : selected.status,
 				operatorNotes: values.operatorNotes,
+				timeStart: values.timeStart,
+				timeEnd: values.timeEnd,
 			}
 			dispatchRequest({ id, body })
 		}
