@@ -49,7 +49,6 @@ export default function ProcessView() {
 	
 	const syncData = () => {
 		let fetched = {};
-		let failed = {}
 		const promiseRequest = pendings.map( request => {
 			const [ id, body ] = request;
 			return syncService.update({id, body})
