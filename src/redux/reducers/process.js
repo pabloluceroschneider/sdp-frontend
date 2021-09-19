@@ -19,7 +19,6 @@ export default function(state = initialState, action) {
     }
     case SET_PROCESS_REQUEST: {
       const { id, body } = action.payload;
-      console.log(`action.payload`, action.payload)
 
       const item = state.data.find(t => t._id === id);
       const newItem = { ...item, ...body };
