@@ -121,9 +121,9 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	const { _id: id, name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
 	const { values, actions, body } = useDetailProcess({...data, status: { id: status, name: lookupstatus[status]}});
 	const { handleInput, handleAutocomplete, handleDoneInput, resetValues, setDone, onStatusChange } = actions;
-	console.log(`values`, values)
 	const onRegister = () => {
-		updateSelected(id, body).then(resetValues)
+		const timeEnd = new Date().toISOString();
+		updateSelected(id, {...body, timeEnd}).then(resetValues)
 	};
 
 	return (

@@ -4,8 +4,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import List from './List';
-import Form from './Form';
-import Gestor from './Gestor';
 import AdminTareas from './AdminTareas';
 
 const content = {

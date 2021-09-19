@@ -1,7 +1,6 @@
 import React from 'react';
 
 import MaterialTable from 'material-table';
-import BallotIcon from '@material-ui/icons/Ballot';
 
 export default function UsersList({ 
   users,

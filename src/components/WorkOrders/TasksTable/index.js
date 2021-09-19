@@ -1,8 +1,8 @@
 import React, { useState, memo } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 
 import MaterialTable from 'material-table';
-
+import HistoryIcon from '@material-ui/icons/History';
 import configTasksTable from './config_tasks_table';
 
 function TasksTable({ 
@@ -11,6 +11,7 @@ function TasksTable({
   onRowAdd : onRowAddProp,
   onRowDelete: onRowDeleteProp,
   onRowUpdate: onRowUpdateProp,
+  onHistorialClick,
 }){
   const [filtering, setfiltering] = useState(false);
   const toggleFiltering = () => setfiltering( f => !f);
@@ -57,7 +58,7 @@ function TasksTable({
         },
         { title: 'Estado', field: 'status', lookup: status, initialEditValue: 'NOT_STARTED' },
         { title: 'Observación', field: 'observation' },
-        { title: 'Tiempo', field: 'duration', render: ({duration}) => duration ? `${duration} mins.` : null },
+        { title: 'Tiempo', field: 'duration', editable:'never', render: ({duration}) => duration ? `${duration} mins.` : null },
       ]}
       options={{
         actionsColumnIndex: 7,
@@ -82,6 +83,11 @@ function TasksTable({
           tooltip: 'Filtrar',
           isFreeAction: true,
           onClick: toggleFiltering
+        },
+        {
+          icon: HistoryIcon,
+          tooltip: 'Ver Historial',
+          onClick: (_, rowData) => onHistorialClick(rowData),
         }
       ]}
       editable={{
