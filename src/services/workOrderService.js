@@ -38,6 +38,7 @@ workOrderService.create = async ({ workorder, tasks }) => {
 		done: t.done,
 		status: t.status,
 		observation: t.observation,
+		estimate: t.estimate,
 	}))
 	const body = {
 		productId: workorder.product._id,
