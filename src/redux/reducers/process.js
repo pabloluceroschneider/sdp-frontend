@@ -6,7 +6,8 @@ import {
 
 const initialState = {
   data: [],
-  requests: [],
+  requests: {},
+  history: {},
 };
 
 export default function(state = initialState, action) {
@@ -19,6 +20,8 @@ export default function(state = initialState, action) {
     }
     case SET_PROCESS_REQUEST: {
       const { id, body } = action.payload;
+      const history = state.history || [];
+      const historyId = history[id] || [];
 
       const item = state.data.find(t => t._id === id);
       const newItem = { ...item, ...body };
@@ -27,11 +30,17 @@ export default function(state = initialState, action) {
       const newData = state.data;
       newData.splice(index, 1, newItem);
 
+      const { timeStart, timeEnd, ...rq } = body;
+
       return {
         ...state,
         requests: {
           ...state.requests,
-          [id]: body,
+          [id]: rq,
+        },
+        history: {
+          ...history,
+          [id]: [...historyId, body],
         },
         data: newData
       };
@@ -39,7 +48,8 @@ export default function(state = initialState, action) {
     case SET_FAILED_REQUEST: {
       return {
         ...state,
-        requests: action.payload,
+        requests: {},
+        history: {},
       };
     }
     default:
