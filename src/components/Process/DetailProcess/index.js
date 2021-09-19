@@ -40,7 +40,9 @@ function reducer(state, action){
 		}),
 		RESET_VALUES: () => ({
 			...state,
-			doneRegister: 0
+			...payload,
+			doneRegister: 0,
+			timeStart: new Date().toISOString(),
 		})
 	}
 	return actionStrategy[type]() || state;
@@ -49,7 +51,8 @@ function reducer(state, action){
 const useDetailProcess = (initialState) => {
 	const [values, dispatch] = useReducer(reducer, {
 		...initialState, 
-		doneRegister: null
+		doneRegister: null,
+		timeStart: new Date().toISOString(),
 	});
 
 	const handleInput = (event) => {
@@ -61,7 +64,7 @@ const useDetailProcess = (initialState) => {
 		const id = event.target.id.split('-')[0];
 		return dispatch({type:'SET_INPUT', payload: { id, value } });
 	};
-	const resetValues = () => dispatch({ type: 'RESET_VALUES' });
+	const resetValues = (payload) => dispatch({ type: 'RESET_VALUES', payload });
 
 	const setDone = (value) => () => 
 		dispatch({
@@ -106,6 +109,7 @@ const useDetailProcess = (initialState) => {
 			status: values.status.id,
 			done: values.done + values.doneRegister,
 			operatorNotes: values.operatorNotes,
+			timeStart: values.timeStart,
 		}
 	};
 }
@@ -117,9 +121,9 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	const { _id: id, name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
 	const { values, actions, body } = useDetailProcess({...data, status: { id: status, name: lookupstatus[status]}});
 	const { handleInput, handleAutocomplete, handleDoneInput, resetValues, setDone, onStatusChange } = actions;
-
 	const onRegister = () => {
-		updateSelected(id, body).then(resetValues)
+		const timeEnd = new Date().toISOString();
+		updateSelected(id, {...body, timeEnd}).then(resetValues)
 	};
 
 	return (

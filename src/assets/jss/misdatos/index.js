@@ -5,7 +5,10 @@ const styles = (theme) => ({
     display: 'flex',
     width: 640,
     height: '100vh',
-    margin: 'auto'
+    margin: 'auto',
+    '@media screen and (max-width: 600px)': {
+      width: '80%',
+    },
   },
   paper: {
     display: 'flex',
@@ -19,13 +22,15 @@ const styles = (theme) => ({
     },
   },
   pwd: {
-    width: '50%',
+    width: 280,
+    maxWidth: '100%',
     margin: '8px auto',
   },
   buttons: {
     display: 'flex',
     justifyContent: 'end',
-    width: '50%',
+    width: 280,
+    maxWidth: '100%',
     margin: '0 auto',
   }
 })

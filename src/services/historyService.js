@@ -1,14 +1,13 @@
 import url from 'helpers/scope';
 import catchResponse from 'helpers/catchResponse';
-let syncService = {};
-
+const historyService = {};
 /**
- * syncService
+ * historyService
  */
-syncService.update = async ({ id, body }) => {
-	const uri = `${url}/tasks/${id}`;
+historyService.getByTask = async ({ id }) => {
+	const uri = `${url}/history/task/${id}`;
 	const response = await fetch(uri, {
-		method: 'PUT',
+		method: 'GET',
 		mode: 'cors',
 		cache: 'no-cache',
 		headers: {
@@ -16,12 +15,10 @@ syncService.update = async ({ id, body }) => {
 		},
 		redirect: 'follow',
 		referrerPolicy: 'no-referrer',
-		body: JSON.stringify(body)
 	})
 	.then(catchResponse)
 	.catch(err => { throw Error(err) })
 	return response;
 };
 
-
-export default syncService;
+export default historyService;

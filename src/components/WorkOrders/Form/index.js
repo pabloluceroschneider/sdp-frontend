@@ -24,6 +24,7 @@ const useStyles = makeStyles(styles);
  */
 function Form({ 
     handleTabChange,
+    onHistorialClick,
     _id: id,
     t,
     ...formInitValues
@@ -224,6 +225,7 @@ function Form({
             data={tasks} 
             quantity={form.quantity} 
             updateTasks={updateTasks}
+            onHistorialClick={onHistorialClick}
             {...actions}
             />
         </div>

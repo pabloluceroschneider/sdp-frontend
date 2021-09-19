@@ -4,16 +4,19 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import WorkOrdersTable from './WorkOrdersTable';
 import Form from './Form';
+import Historial from './Historial';
 import withSnackbar from 'HOCS/withSnackbar';
 
 const content = {
   0: ({workorders, onClickRow}) => <WorkOrdersTable workorders={workorders} onClickRow={onClickRow} />,
-  1: ({rowSelected, handleTabChange}) => <Form {...rowSelected} handleTabChange={handleTabChange} />
+  1: ({rowSelected, onHistorialClick, handleTabChange}) => <Form {...rowSelected} onHistorialClick={onHistorialClick} handleTabChange={handleTabChange} />,
+  2: ({taskHistorialSelected, handleTabChange}) => <Historial task={taskHistorialSelected} handleTabChange={handleTabChange} />,
 }
 
 function WorkOrders({ workorders, updateList, toggleSnackbar }) {
   const [tabSelected, settabSelected] = React.useState(0);
   const [rowSelected, setrowSelected] = React.useState({});
+  const [taskHistorialSelected, settaskHistorialSelected] = React.useState();
  
   const edit_new_label = {
     true: 'Editar',
@@ -24,6 +27,7 @@ function WorkOrders({ workorders, updateList, toggleSnackbar }) {
     (_, newValue, snackbar) => {
       settabSelected(newValue);
       !newValue && setrowSelected({});
+      !newValue && settaskHistorialSelected();
       snackbar && toggleSnackbar(snackbar)
       snackbar && updateList();
     },[updateList, toggleSnackbar]);
@@ -32,6 +36,12 @@ function WorkOrders({ workorders, updateList, toggleSnackbar }) {
     (row) => {
       setrowSelected(row);
       handleTabChange(null, 1);
+    },[handleTabChange]);
+  
+  const onHistorialClick = React.useCallback(
+    (row) => {
+      settaskHistorialSelected(row);
+      handleTabChange(null, 2);
     },[handleTabChange]);
 
   return (
@@ -45,13 +55,16 @@ function WorkOrders({ workorders, updateList, toggleSnackbar }) {
       >
         <Tab label="Listado" />
         <Tab label={edit_new_label[Boolean(rowSelected._id)]}/>
+        {taskHistorialSelected && <Tab label="Historial de Tarea" />}
       </Tabs>
       <div style={{marginBottom: 160}}>
         {content[tabSelected]({
           workorders,
           handleTabChange,
           onClickRow,
+          onHistorialClick,
           rowSelected,
+          taskHistorialSelected,
         })}
       </div>
     </Paper>
