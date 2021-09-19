@@ -123,7 +123,7 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	const { handleInput, handleAutocomplete, handleDoneInput, resetValues, setDone, onStatusChange } = actions;
 	const onRegister = () => {
 		const timeEnd = new Date().toISOString();
-		updateSelected(id, {...body, timeEnd}).then(resetValues)
+		updateSelected(id, {...body, timeEnd, name}).then(resetValues)
 	};
 
 	return (

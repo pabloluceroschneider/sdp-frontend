@@ -58,10 +58,11 @@ function TasksTable({
         },
         { title: 'Estado', field: 'status', lookup: status, initialEditValue: 'NOT_STARTED' },
         { title: 'Observación', field: 'observation' },
-        { title: 'Tiempo', field: 'duration', editable:'never', render: ({duration}) => duration ? `${duration} mins.` : null },
+        { title: 'Estimado', field: 'estimate', editable:'never', render: ({estimate}) => estimate ? `${estimate.toFixed(2)} mins.` : null },
+        { title: 'Duración', field: 'duration', editable:'never', render: ({duration}) => duration ? `${duration} mins.` : null },
       ]}
       options={{
-        actionsColumnIndex: 7,
+        actionsColumnIndex: 8,
         filtering: filtering,
         paging: false,
         search: false,
