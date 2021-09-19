@@ -6,7 +6,6 @@ import BallotIcon from '@material-ui/icons/Ballot';
 import PeopleIcon from '@material-ui/icons/People';
 // core components/views for Admin layout
 import Users from "views/Users";
-import Tasks from "views/Tasks";
 import Companies from "views/Companies";
 import BasePlans from "views/BasePlans";
 import Products from "views/Products";
@@ -22,14 +21,6 @@ export const adminRoutes = [
     icon: BallotIcon,
     component: ProcessView,
     layout: "/operario"
-  },
-  {
-    path: "/tareas",
-    name: "Tareas",
-    permissions: ['Administrador'],
-    icon: BallotIcon,
-    component: Tasks,
-    layout: "/admin"
   },
   {
     path: "/ordenes-de-trabajo",
