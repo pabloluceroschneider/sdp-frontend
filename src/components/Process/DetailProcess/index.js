@@ -107,7 +107,7 @@ const useDetailProcess = (initialState) => {
 		actions,
 		body: {
 			status: values.status.id,
-			done: values.done + values.doneRegister,
+			done: values.doneRegister,
 			operatorNotes: values.operatorNotes,
 			timeStart: values.timeStart,
 		}
@@ -158,6 +158,7 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 						name="operatorNotes"
 						multiline
 						defaultValue={operatorNotes}
+						value={values.operatorNotes}
 						onChange={handleInput}
 					/>
 					<Autocomplete

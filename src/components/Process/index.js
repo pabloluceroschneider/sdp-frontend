@@ -33,10 +33,10 @@ function Process({ updateData }) {
 		if (err.message === "Offline") {
 			setSelected(s => ({
 				...s,
-				done: values.done ? values.done : selected.done,
+				done: values.done ? selected.done + values.done : selected.done,
 			}));
 			const body = {
-				done: values.done ? values.done : selected.done,
+				done: values.done,
 				status: values.status ? values.status : selected.status,
 				operatorNotes: values.operatorNotes,
 				timeStart: values.timeStart,
