@@ -182,4 +182,26 @@ tasksService.remove = async ({url = endpoint, id }) => {
 	return tasks;
 }
 
+/**
+ * GET RECORDS mejores 10 tareas (en duración).
+ * @param {name} id tasksName.
+ * @returns {Array} Tasks
+ */
+ tasksService.record = async ({url = endpoint, name }) => {
+	const uri = `${url}/tasks/record/${name}`;
+
+  const tasks = await fetch(uri, {
+		method: 'GET',
+		mode: 'cors',
+		cache: 'no-cache',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		redirect: 'follow',
+		referrerPolicy: 'no-referrer'
+	}).then(catchResponse)
+
+	return tasks;
+}
+
 export default tasksService;
