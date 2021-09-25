@@ -30,6 +30,7 @@ const useStyles = makeStyles(styles);
 function Form({ 
     rowSelected,
     handleTabChange,
+    onHistorialClick,
     t,
 }) {
   const classes = useStyles();
@@ -75,15 +76,15 @@ function Form({
   };
 
   // <!---------- tasks ----------------->
-  const onRowAdd = useCallback( newData => 
-    new Promise((resolve, _) => {
+  const onRowAdd = useCallback( newData => {
+    return new Promise((resolve, _) => {
       const tasks = Array.from(form.tasks || []);
       setform( f => ({
         ...f,
         tasks : [...tasks, newData ]
       }))
-      setTimeout(resolve, 400)
-    }),[form.tasks]);
+      resolve()
+    })},[form.tasks]);
   const onRowUpdate = useCallback( (newData, oldData) => 
     new Promise((resolve, _) => {
       const tasks = Array.from(form.tasks);
@@ -92,7 +93,7 @@ function Form({
         ...f,
         tasks,
       }))
-      setTimeout(resolve, 100)
+      resolve()
     }),[form.tasks]);
   const onRowDelete = useCallback((newData, oldData) =>
     new Promise((resolve, _) => {
@@ -102,7 +103,7 @@ function Form({
         ...f,
         tasks,
       }))
-      setTimeout(resolve, 400)
+      resolve()
     }),[form.tasks]);
   // <!---------- /tasks ----------------->
 
@@ -185,6 +186,7 @@ function Form({
           onRowAdd={onRowAdd}
           onRowUpdate={onRowUpdate}
           onRowDelete={onRowDelete}
+          onHistorialClick={onHistorialClick}
           />
 
       </form>

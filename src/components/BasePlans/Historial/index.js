@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import MaterialTable from 'material-table';
-import HistoryIcon from '@material-ui/icons/History';
+import tasksService from 'services/tasksService';
 
 function TasksTable({ 
-  data,
-  onRowAdd,
-  onRowUpdate,
-  onRowDelete,
-  onHistorialClick,
+  historialSelected,
 }){
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    if (!historialSelected) return;
+    tasksService.record({ name: historialSelected.name })
+      .then( ({response}) => setData(response))
+  },[historialSelected])
+
 
   return ( 
     <MaterialTable
       data={data}
       columns={[
         { title: 'Nombre', field: 'name' },
-        { title: 'Observación', field: 'observation' },
-        { title: 'Duración estimada', field: 'estimate', editable: 'never', render: ({estimate}) => estimate ? `${estimate} mins` : null },
+        { title: 'Responsable', field: 'assignedTo' },
+        { title: 'Duración', field: 'duration', editable: 'never', render: ({duration}) => duration ? `${duration} mins` : null },
       ]}
       options={{
         actionsColumnIndex: 5,
@@ -31,18 +35,6 @@ function TasksTable({
       style={{
         boxShadow: 'none',
       }}
-      editable={{
-        onRowAdd: onRowAdd,
-        onRowUpdate: onRowUpdate,
-        onRowDelete: onRowDelete,
-      }}
-      actions={[
-        {
-          icon: HistoryIcon,
-          tooltip: 'Ver Historial',
-          onClick: (_, rowData) => onHistorialClick(rowData),
-        }
-      ]}
       localization={{
         body: {
           emptyDataSourceMessage: 'No hay Tareas',
