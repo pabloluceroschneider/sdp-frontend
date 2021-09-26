@@ -99,8 +99,9 @@ tasksService.getTasksByWorkorderId = async ({url = endpoint, id}) => {
  * @returns {Array} Tasks
  */
  tasksService.update = async ({url = endpoint, id, body }) => {
-	const uri = `${url}/tasks/${id}`;
+	const uri = `${url}/tasks/${id}?online=true`;
 	const { _id, ...restBody } = body;
+	restBody.duration = typeof (restBody.duration) === 'number' ? restBody.duration : 0;
   const response = await fetch(uri, {
 		method: 'PUT',
 		mode: 'cors',

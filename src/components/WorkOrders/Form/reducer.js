@@ -8,20 +8,23 @@ export default function reducer(state, action) {
 			...state,
 			[payload.field]: payload.value
 		}),
-		SET_ASSIGNED_TO: () => ({
-			...state,
-			assignedTo: payload.username,
-			tasks: state.tasks.map((t) => ({
-				...t,
-				assignedTo: payload.username
-			})),
-			newTasks: state.newTasks.map((t) => ({
-				...t,
-				assignedTo: payload.username
-			})),
-			warnings: [],
-			updateTasks: !state.updateTasks
-		}),
+		SET_ASSIGNED_TO: () => {
+			if (!payload) return state;
+			return {
+				...state,
+				assignedTo: payload.username,
+				tasks: state.tasks.map((t) => ({
+					...t,
+					assignedTo: payload.username
+				})),
+				newTasks: state.newTasks.map((t) => ({
+					...t,
+					assignedTo: payload.username
+				})),
+				warnings: [],
+				updateTasks: !state.updateTasks
+			}
+		},
 
 		// wo tasks
 		SET_WO_TASKS: () => ({

@@ -24,13 +24,21 @@ export default function(state = initialState, action) {
       const historyId = history[id] || [];
 
       const item = state.data.find(t => t._id === id);
-      const newItem = { ...item, ...body };
+      const newItem = { ...item, ...body, done: item.done + body.done };
       const index = item.tableData.id;
 
       const newData = state.data;
       newData.splice(index, 1, newItem);
 
-      const { timeStart, timeEnd, ...rq } = body;
+      const { 
+        timeStart, 
+        timeEnd, 
+        company, 
+        batchNumber, 
+        product, 
+        tableData, 
+        ...rq 
+      } = newItem;
 
       return {
         ...state,

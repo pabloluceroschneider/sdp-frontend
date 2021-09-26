@@ -41,6 +41,7 @@ function Process({ updateData }) {
 				operatorNotes: values.operatorNotes,
 				timeStart: values.timeStart,
 				timeEnd: values.timeEnd,
+				name: values.name,
 			}
 			dispatchRequest({ id, body })
 		}

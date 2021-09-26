@@ -41,6 +41,7 @@ function reducer(state, action){
 		RESET_VALUES: () => ({
 			...state,
 			...payload,
+			status: state.status,
 			doneRegister: 0,
 			timeStart: new Date().toISOString(),
 		})
@@ -118,7 +119,7 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 	const classes = useStyles();
 	const optionsStatus = useSelector((state) => state.appData.status);
 	const lookupstatus = useSelector((state) => state.appData.lookupstatus);
-	const { _id: id, name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
+	const { _id: id, estimate, name, batchNumber, company, product, observation, quantity, done, status, operatorNotes } = data;
 	const { values, actions, body } = useDetailProcess({...data, status: { id: status, name: lookupstatus[status]}});
 	const { handleInput, handleAutocomplete, handleDoneInput, resetValues, setDone, onStatusChange } = actions;
 	const onRegister = () => {
@@ -138,12 +139,14 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 			<div className={classes.container}>
 				<div className={classes.header}>
 					<div className={classes.name}>{name}</div>
-					<div className={classes.input}>{`${done} completas de ${quantity}`}</div>
+					<div className={classes.input}>{`${(done||0)} completas de ${quantity}`}</div>
+					<div className={classes.smallInput}>nº Orden: {batchNumber}</div>
 				</div>
 				<div className={classes.row}>
+					{Boolean(estimate) && <div className={classes.smallInput}>{`Tiempo determinado: ${estimate} mins`}</div> }
 					<div className={classes.smallInput}>{company}</div>
 					<div className={classes.smallInput}>{product}</div>
-					<div className={classes.smallInput}>nº Orden: {batchNumber}</div>
+					
 				</div>
 				{observation && (
 					<div className={classes.row}>
@@ -175,13 +178,13 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 				</div>
 
 				<div className={classes.row}>
-					<Button onClick={onStatusChange("IN_PROGRESS")} className={classes.statusBtn}>
+					<Button onClick={onStatusChange("IN_PROGRESS")} className={[classes.statusBtn, classes.IN_PROGRESS]}>
 						En progreso
 					</Button>
-					<Button onClick={onStatusChange("PAUSED")} className={classes.statusBtn}>
+					<Button onClick={onStatusChange("PAUSED")} className={[classes.statusBtn, classes.PAUSED]}>
 						Pausada
 					</Button>
-					<Button onClick={onStatusChange("FINISHED")} className={classes.statusBtn}>
+					<Button onClick={onStatusChange("FINISHED")} className={[classes.statusBtn, classes.FINISHED]}>
 						Finalizada
 					</Button>
 				</div>

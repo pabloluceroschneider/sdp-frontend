@@ -44,7 +44,7 @@ function Form({ handleTabChange, t }) {
 
 	return (
 		<section className={classes.section}>
-			<form className={classes.form}>
+			<div className={classes.form}>
         <TextField
 					required
 					autoFocus
@@ -58,7 +58,7 @@ function Form({ handleTabChange, t }) {
         <Button onClick={onSubmit} className={classes.btnSave} disabled={!form.company || form.loading} variant="contained" color="primary">
           Guardar
         </Button>
-      </form>
+      </div>
 			{form.error && (
 				<div className={classes.error}>{t(form.error, form.company)}</div>
 			)}
