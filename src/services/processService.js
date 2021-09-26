@@ -1,6 +1,16 @@
 import url from 'helpers/scope';
 import catchResponse from 'helpers/catchResponse';
 let processService = {};
+const objectNoNullValues = body => {
+	return Object.entries(body).reduce((acc, item) => {
+		const [ key, value ] = item
+		if (!value) return acc
+		return {
+			...acc,
+			[key]: value
+		}
+	},{})
+}
 
 /**
  * 
@@ -32,7 +42,7 @@ processService.getTasks = async ({username}) => {
  *  
  */
  processService.updateTask = async ({ id, body }) => {
-	const uri = `${url}/tasks/${id}`;
+	const uri = `${url}/tasks/${id}?accumulateDone=true`;
 	const response = await fetch(uri, {
 		method: 'PUT',
 		mode: 'cors',
@@ -42,7 +52,7 @@ processService.getTasks = async ({username}) => {
 		},
 		redirect: 'follow',
 		referrerPolicy: 'no-referrer',
-		body: JSON.stringify(body)
+		body: JSON.stringify(objectNoNullValues(body))
 	})
 	.then(catchResponse)
 	.catch(err => console.log(err));

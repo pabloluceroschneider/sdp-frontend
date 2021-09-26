@@ -23,7 +23,7 @@ const styles = {
   header: {
     display: 'flex',
     alignItems: 'baseline',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-between',
   },
   row: {
     display: 'flex',
@@ -41,6 +41,10 @@ const styles = {
   },
   input:{
     lineHeight: '1.1',
+  },
+  estimate:{
+    lineHeight: '1.1',
+    textAlign: 'left'
   },
   smallInput:{
     fontSize: '.8em',
@@ -94,6 +98,15 @@ const styles = {
     fontSize: '1em',
     margin: '0 12px',
     border: '1px solid #c1c1c1',
+  },
+  IN_PROGRESS: {
+    border: '2px solid #4DBDDE',
+  },
+  PAUSED: {
+    border: '2px solid #DEDB4D',
+  },
+  FINISHED: {
+    border: '2px solid #C4F5AF',
   },
 
   '@media screen and (max-width: 600px)': {

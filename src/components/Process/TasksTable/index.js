@@ -18,7 +18,7 @@ function ProcessTable({
         { title: 'Empresa', field: 'company' },
         { title: 'Producto', field: 'product' },
         { title: 'Tarea', field: 'name' },
-        { title: 'Completados', render: ({ done, quantity }) => `${done} de ${quantity}`},
+        { title: 'Completados', render: ({ done, quantity }) => `${(done||0)} de ${quantity}`},
         { title: 'Estado', field: 'status', lookup: lookupstatus },
       ]}
       onRowClick={onRowClick}
