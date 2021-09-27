@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { differenceInSeconds } from 'date-fns';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -44,7 +45,16 @@ function reducer(state, action){
 			status: state.status,
 			doneRegister: 0,
 			timeStart: new Date().toISOString(),
-		})
+		}),
+		SET_TIMEOUT: () => {
+			const difference = differenceInSeconds(new Date(), new Date(state.timeStart))
+			const minutes = Math.floor(difference / 60);
+			const seconds = (difference % 60).toFixed();
+			return {
+				...state,
+				timeStamp: `${minutes}:${seconds}`
+			}
+		}
 	}
 	return actionStrategy[type]() || state;
 }
@@ -55,6 +65,8 @@ const useDetailProcess = (initialState) => {
 		doneRegister: null,
 		timeStart: new Date().toISOString(),
 	});
+	
+	setInterval(() => dispatch({type:'SET_TIMEOUT'}), 1000)
 
 	const handleInput = (event) => {
 		const id = event.target.name;
@@ -139,6 +151,9 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 			<div className={classes.container}>
 				<div className={classes.header}>
 					<div className={classes.name}>{name}</div>
+					<div className={classes.sd}>{values.timeStamp}</div>
+				</div>
+				<div className={classes.row}>
 					<div className={classes.input}>{`${(done||0)} completas de ${quantity}`}</div>
 					<div className={classes.smallInput}>nº Orden: {batchNumber}</div>
 				</div>
@@ -150,7 +165,7 @@ function DetailProcess({ data, onDrawerClose, updateSelected }) {
 				</div>
 				{observation && (
 					<div className={classes.row}>
-						<div className={classes.input}>{observation}</div>
+						<div className={classes.observation}>{observation}</div>
 					</div>
 				)}
 

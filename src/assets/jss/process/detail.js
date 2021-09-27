@@ -28,9 +28,8 @@ const styles = {
   row: {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '100%',
-    borderBottom: '1px solid #e6e6e6',
-    paddingBottom: 36,
+    border: '1px solid #ebebeb',
+    padding: 16
   },
   statusBtn:{
     width: '100%',
@@ -41,6 +40,10 @@ const styles = {
   },
   input:{
     lineHeight: '1.1',
+  },
+  observation:{
+    lineHeight: '1.1',
+    background: 'yellow'
   },
   estimate:{
     lineHeight: '1.1',
@@ -101,12 +104,21 @@ const styles = {
   },
   IN_PROGRESS: {
     border: '2px solid #4DBDDE',
+    '&:hover, &:active':{
+      backgroundColor: '#4DBDDE',
+    }
   },
   PAUSED: {
     border: '2px solid #DEDB4D',
+    '&:hover, &:active':{
+      backgroundColor: '#DEDB4D',
+    }
   },
   FINISHED: {
     border: '2px solid #C4F5AF',
+    '&:hover, &:active':{
+      backgroundColor: '#C4F5AF',
+    }
   },
 
   '@media screen and (max-width: 600px)': {
@@ -115,13 +127,16 @@ const styles = {
       padding: 12,
     },
     header: {
+      position: 'sticky',
+      top: 0,
       display: 'flex',
       flexDirection: 'column',
+      paddingBottom: 16,
+      backgroundColor: 'white',
     },
     row: { 
       flexDirection: 'column',
       padding: 12,
-      width: '100%',
       border: '1px solid #ededed',
       marginBottom: 24,
     },
@@ -129,7 +144,6 @@ const styles = {
       width: '85%' 
     },
     statusBtn: {
-      // width: '85%',
       margin: '0 4px',
       alignSelf: 'center',
       marginBottom: 24,
