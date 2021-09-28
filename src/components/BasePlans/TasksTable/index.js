@@ -17,7 +17,8 @@ function TasksTable({
       columns={[
         { title: 'Nombre', field: 'name' },
         { title: 'Observación', field: 'observation' },
-        { title: 'Duración estimada', field: 'estimate', editable: 'never', render: ({estimate}) => estimate ? `${estimate} mins` : null },
+        { title: 'Duración estimada', field: 'estimate', render: ({estimate}) => estimate ? `${estimate} mins` : null },
+        { title: 'Duración calculada', field: 'estimate', editable: 'never', render: ({calculated}) => calculated ? `${calculated} mins` : null },
       ]}
       options={{
         actionsColumnIndex: 5,

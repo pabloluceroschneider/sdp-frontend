@@ -24,8 +24,8 @@ function HistorialTable({
   return ( 
       <MaterialTable
         data={data}
+        title={task.name}
         isLoading={!Boolean(data)}
-        title=""
         columns={[
           { title: 'Comienzo', field: 'timeStart', render: ({timeStart}) => timeStart ? new Date(timeStart).toLocaleString() : null},
           { title: 'Duración (Por Unidad)', field: 'duration', render: ({duration}) => duration > -1 ? `${duration} mins` : null },

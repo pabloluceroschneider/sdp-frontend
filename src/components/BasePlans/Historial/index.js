@@ -18,8 +18,8 @@ function TasksTable({
   return ( 
     <MaterialTable
       data={data}
+      title={historialSelected.name}
       columns={[
-        { title: 'Nombre', field: 'name' },
         { title: 'Responsable', field: 'assignedTo' },
         { title: 'Duración (Por Unidad)', field: 'duration', editable: 'never', render: ({duration}) => duration ? `${duration} mins` : null },
       ]}
@@ -27,7 +27,6 @@ function TasksTable({
         actionsColumnIndex: 5,
         paging: false,
         search: false,
-        showTitle: false,
         rowStyle: rowData => ({ 
           backgroundColor: rowData.tableData.id % 2 === 0 ? '#fcfcfc' : 'white' 
         }),
