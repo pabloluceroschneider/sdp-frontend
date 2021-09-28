@@ -28,7 +28,7 @@ function HistorialTable({
         title=""
         columns={[
           { title: 'Comienzo', field: 'timeStart', render: ({timeStart}) => timeStart ? new Date(timeStart).toLocaleString() : null},
-          { title: 'Duración', field: 'duration', render: ({duration}) => duration > -1 ? `${duration} mins` : null },
+          { title: 'Duración (Por Unidad)', field: 'duration', render: ({duration}) => duration > -1 ? `${duration} mins` : null },
           { title: 'Completos', field: 'values', render: ({values}) => values.done },
           { title: 'Estado', field: 'values', render: ({values}) => status[values.status] },
           { title: 'Comentario', field: 'values', render: ({values}) => values.operatorNotes },

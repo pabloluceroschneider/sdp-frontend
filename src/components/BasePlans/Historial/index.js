@@ -21,7 +21,7 @@ function TasksTable({
       columns={[
         { title: 'Nombre', field: 'name' },
         { title: 'Responsable', field: 'assignedTo' },
-        { title: 'Duración', field: 'duration', editable: 'never', render: ({duration}) => duration ? `${duration} mins` : null },
+        { title: 'Duración (Por Unidad)', field: 'duration', editable: 'never', render: ({duration}) => duration ? `${duration} mins` : null },
       ]}
       options={{
         actionsColumnIndex: 5,

@@ -6,14 +6,26 @@ const styles = {
     width: 'auto',
   },
   drawer: {
-    width: '88vw',
+    width: '100vw',
     flexShrink: 0,
+  },
+  detailProcess: {
+    display: 'flex',
+    width: '100vw',
+  },
+  close: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '8vw',
+    height: 20,
+    padding: 28,
   },
   container: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '100vh',
+    width: '92vw',
+    height: '92vh',
     fontSize: '1.4em',
     padding: 24,
   },
