@@ -30,7 +30,11 @@ basePlanService.create = async (body) => {
 		body: JSON.stringify({
 			name: body.name,
 			productId: body.product._id,
-			tasks: body.tasks?.map( ({name, observation}) => ({name, observation}))
+			tasks: body.tasks?.map(({name, observation, estimate}) => ({
+				name, 
+				observation, 
+				estimate: estimate || null, 
+			}))
 		})
 	}).then(catchResponse);
 
