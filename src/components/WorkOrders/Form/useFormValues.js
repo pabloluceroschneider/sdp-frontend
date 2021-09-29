@@ -30,7 +30,7 @@ const useFormValues = ({
   // <!------- INITIALS --------->
   const getTasksByWorkorderId = useCallback(
     async () => 
-      await tasksService.getTasksByWorkorderId({ id: workorderId}).then(({response}) => response)
+      await tasksService.getTasksByWorkorderId({ id: workorderId }).then(({response}) => response)
   ,[workorderId])
 
   const getNewTasksFromBasePlan = useCallback(
@@ -40,7 +40,8 @@ const useFormValues = ({
         assignedTo: 'Sin asignar',
         done: 0,
         quantity: state.quantity,
-        newTaskOrder: index
+        estimate: t.estimate || t.calculated,
+        newTaskOrder: index,
     }))
   ,[state.quantity])
 
