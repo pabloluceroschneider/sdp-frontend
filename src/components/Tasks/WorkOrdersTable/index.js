@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux'
 import MaterialTable from 'material-table';
-import { get, validateObject, InfoError } from 'helpers/tableHelpers';
+import { validateObject, InfoError } from 'helpers/tableHelpers';
 import configWoTable from './config_wo_table'
 
 function WorkOrdersTable({ workorders, onClickRow }) {
