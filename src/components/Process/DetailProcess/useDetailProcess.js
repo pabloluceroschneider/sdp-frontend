@@ -1,5 +1,4 @@
 import { useReducer } from 'react';
-import { differenceInSeconds } from 'date-fns';
 
 function reducer(state, action){
 	const { type, payload } = action;
