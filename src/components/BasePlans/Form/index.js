@@ -15,6 +15,7 @@ import Alert from '@material-ui/lab/Alert';
 import TasksTable from 'components/BasePlans/TasksTable';
 import withTranslation from 'HOCS/withTranslation';
 import { validateObject, InfoError } from 'helpers/tableHelpers';
+import sumTasksTimes from 'helpers/sumTasksTimes';
 
 
 // styles
@@ -44,6 +45,8 @@ function Form({
     name,
     tasks,
   } = rowSelected;
+
+  const { totalEstimated, totalCalculated } = sumTasksTimes({tasks});
 
   // <!------  States  -------->
   const [form, setform] = React.useState({
@@ -136,7 +139,7 @@ function Form({
 
   return (
     <div className={classes.container}>
-      <form className={classes.form}>
+      <div className={classes.form}>
         <div className={classes.row}>
           <Autocomplete 
             className={classes.company} 
@@ -189,7 +192,15 @@ function Form({
           onHistorialClick={onHistorialClick}
           />
 
-      </form>
+      </div>
+      <div className={classes.totalTimes}>
+        <Alert severity="info" className={classes.alert}>
+          {`Duración estimada total: ${totalEstimated} minutos`}
+        </Alert>
+        <Alert severity="info"className={classes.alert} >
+          {`Duración calculada total: ${totalCalculated} minutos`}
+        </Alert>
+      </div>
 
       <div className={classes.buttonsRow}>
         <div className={classes.leftBtn}>

@@ -34,6 +34,13 @@ const styles = {
   alert: {
     padding: '0 16px'
   },
+  totalTimes: {
+    display: 'inline-flex',
+    gap: 4,
+    justifyContent: 'center',
+    padding: '16px',
+    width: '100%',
+  },
 
 
 
