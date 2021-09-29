@@ -10,6 +10,7 @@ import Companies from "views/Companies";
 import BasePlans from "views/BasePlans";
 import Products from "views/Products";
 import WorkOrders from "views/WorkOrders";
+import Tasks from "views/Tasks";
 
 import ProcessView from "views/Process";
 
@@ -21,6 +22,14 @@ export const adminRoutes = [
     icon: BallotIcon,
     component: ProcessView,
     layout: "/operario"
+  },
+  {
+    path: "/tareas",
+    name: "Tareas",
+    permissions: ['Administrador'],
+    icon: BallotIcon,
+    component: Tasks,
+    layout: "/admin"
   },
   {
     path: "/ordenes-de-trabajo",

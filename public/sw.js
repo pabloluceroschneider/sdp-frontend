@@ -1,22 +1,30 @@
-console.warn('service worker public folder');
-
-let cacheData = 'app-2021-09-18';
+const assets = [
+  '/static/js/bundle.js',
+  '/static/js/main.chunk.js',
+  '/static/js/0.chunk.js',
+  '/index.html',
+  '/',
+  '/operario/proceso',
+  'chartist.min.js',
+  'init.js',
+]
 
 this.addEventListener('install', (event) => {
-	// event.waitUntil(
-	// 	caches.open(cacheData).then((cache) => {
-	// 		cache.addAll([
-	// 			'/static/js/bundle.js',
-	// 			'/static/js/main.chunk.js',
-	// 			'/static/js/0.chunk.js',
-	// 			'/index.html',
-	// 			'/',
-	// 			'/operario/proceso',
-  //       'chartist.min.js',
-  //       'init.js',
-	// 		]);
-	// 	})
-	// );
+	event.waitUntil(
+		caches.open('app-v0.1').then((cache) => {
+			assets.map(ass =>cache.delete(ass)) 
+		})
+	);
+  event.waitUntil(
+		caches.open('app-2021-08-30').then((cache) => {
+			assets.map(ass =>cache.delete(ass)) 
+		})
+	);
+  event.waitUntil(
+		caches.open('app-2021-09-18').then((cache) => {
+			assets.map(ass =>cache.delete(ass)) 
+		})
+	);
 });
 
 this.addEventListener('fetch', (event) => {

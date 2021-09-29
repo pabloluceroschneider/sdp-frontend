@@ -2,6 +2,30 @@ import endpoint from 'helpers/scope';
 import catchResponse from 'helpers/catchResponse';
 let tasksService = {};
 
+
+/**
+ * Get all tasks by an tasks Id.
+ * @param {number} id tasksId.
+ * @param {string} url optional - default const const endpoint = 'http://localhost:8080';
+ * @returns {Array} Tasks
+ */
+ tasksService.getAll = async (url = endpoint) => {
+	const uri = `${url}/tasks`;
+
+  const tasks = await fetch(uri, {
+		method: 'GET',
+		mode: 'cors',
+		cache: 'no-cache',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		redirect: 'follow',
+		referrerPolicy: 'no-referrer',
+	}).then(catchResponse)
+
+	return tasks;
+}
+
 /**
  * Get all tasks by an tasks Id.
  * @param {number} id tasksId.
