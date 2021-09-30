@@ -193,14 +193,14 @@ function Form({
           />
 
       </div>
-      <div className={classes.totalTimes}>
+      {tasks && <div className={classes.totalTimes}>
         <Alert severity="info" className={classes.alert}>
           {`Duración estimada total: ${totalEstimated} minutos`}
         </Alert>
         <Alert severity="info"className={classes.alert} >
           {`Duración calculada total: ${totalCalculated} minutos`}
         </Alert>
-      </div>
+      </div>}
 
       <div className={classes.buttonsRow}>
         <div className={classes.leftBtn}>

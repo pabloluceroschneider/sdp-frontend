@@ -1,5 +1,5 @@
 
-const sumTasksTimes = ({ tasks }) => {
+const sumTasksTimes = ({ tasks = [] }) => {
 
   const totalEstimated = tasks.reduce((acc, item) => {
     return acc + (item.estimate || 0)
