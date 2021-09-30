@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import Button from "@material-ui/core/Button";
 
 class ErrorBoundary extends React.Component {
@@ -38,9 +39,14 @@ class ErrorBoundary extends React.Component {
           </div>
 
           <p>Trabajaremos en arreglarlo! <span role="img" aria-label="working on that!">⚠️</span></p>          
-          <Button onClick={() => this.backToApplication()}>
-            Volver a la aplicación
-          </Button>
+          <div style={{ display:'inline-flex', width:'100%', justifyContent:'center', gap: 24}}>
+            <Button onClick={() => this.backToApplication()}>
+              Volver a la aplicación
+            </Button>
+            <Button color="primary" variant="contained" onClick={() => this.props.closeSession()}>
+              Cerrar sesión para limpiar datos
+            </Button>
+          </div>
         </section>
       )
     }
@@ -48,4 +54,13 @@ class ErrorBoundary extends React.Component {
     return this.props.children; 
   }
 }
-export default ErrorBoundary
+
+const mapDispatchToProps = dispatch => {
+  return {
+    closeSession: () => {
+      dispatch({ type: "SET_TOKEN", payload: { token: null } });
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ErrorBoundary)
