@@ -1,20 +1,21 @@
 import React from 'react'
 // redux 
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 // services
-import basePlanService from 'services/basePlanService';
+// import basePlanService from 'services/basePlanService';
 
 // dependencies
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import Alert from '@material-ui/lab/Alert';
+// import TextField from '@material-ui/core/TextField';
+// import Button from '@material-ui/core/Button';
+// import Autocomplete from '@material-ui/lab/Autocomplete';
+// import Alert from '@material-ui/lab/Alert';
 
 // project components
+// import TasksTable from 'components/BasePlans/TasksTable';
 import withTranslation from 'HOCS/withTranslation';
-import { validateObject, InfoError } from 'helpers/tableHelpers';
-import sumTasksTimes from 'helpers/sumTasksTimes';
+// import { validateObject, InfoError } from 'helpers/tableHelpers';
+// import sumTasksTimes from 'helpers/sumTasksTimes';
 
 
 // styles
@@ -29,13 +30,8 @@ const useStyles = makeStyles(styles);
  */
 function Form({ 
     rowSelected,
-    handleTabChange,
-    onHistorialClick,
-    t,
 }) {
   const classes = useStyles();
-  const companies = useSelector(state => state.appData.companies);
-  const optionsproducts = useSelector(state => state.appData.optionsproducts);
   
   const {
     _id: id,
@@ -45,10 +41,8 @@ function Form({
     tasks,
   } = rowSelected;
 
-  const { totalEstimated, totalCalculated } = sumTasksTimes({tasks});
-
   // <!------  States  -------->
-  const [form, setform] = React.useState({
+  const [form] = React.useState({
     _id: id,
     name,
     company,
@@ -60,143 +54,11 @@ function Form({
   });
 
 
-  // <!------ HANDLERS  -------->
-  const handleAutocompleteChange = (event, value) => {
-    const id = event.target.id.split("-")[0];
-    setform({
-      ...form,
-      [id] : value
-    })
-  }
-  const handleInputChange = event => {
-    const id = event.target.name
-    const value = event.target.value;
-    setform({
-      ...form,
-      [id] : value
-    })
-  };
-
-  // <!---------- actions ---------------->
-  const handleSave = () => {
-    const promiseUpsert = new Promise( async (res, rej) => {
-      const response = id 
-        ? await basePlanService.update(form)
-        : await basePlanService.create(form)
-      res(response)
-    })
-    promiseUpsert.then( ({ response, error }) => {
-      error 
-        ? setform( f => ({...f, error: response }))
-        : handleTabChange(null, 0, true)
-    })
-  }
-  const handleDeleteBtn = () => {
-    setform({ ...form, error: '', confirm: true, })
-  }
-  const confirmDelete = async () => {
-    await basePlanService.delete(id);
-    handleTabChange(null, 0, true);
-  }
-  // <!---------- /actions --------------->
-
   // conditional render
-  if (!validateObject(optionsproducts)) return <InfoError value="Productos"/>
 
   return (
     <div className={classes.container}>
-      <div className={classes.form}>
-        <div className={classes.row}>
-          <Autocomplete 
-            className={classes.company} 
-            options={companies} 
-            disabled={Boolean(id)}
-            defaultValue={company} 
-            value={form.company}
-            getOptionSelected={(option, value) => option.name === value.name}
-			      getOptionLabel={option => option.name}
-            label="Cliente" 
-            id="company"
-            onChange={handleAutocompleteChange}
-            renderInput={(params) => (
-              <TextField {...params} label="Cliente" name="company" />
-              )}
-          />
-        </div>
-        <div className={classes.row}>
-          <Autocomplete 
-            label="Producto" 
-            id="product"
-            options={optionsproducts[form.company?._id] || []} 
-            value={form.product}
-            disabled={Boolean(id)}
-            defaultValue={{name: product?.name}} 
-            onChange={handleAutocompleteChange}
-            getOptionSelected={(option, value) => option.name === value.name}
-			      getOptionLabel={option => option.name}
-            className={classes.product} 
-            renderInput={(params) => (
-              <TextField {...params} label="Producto" name="product" />
-              )}
-          />
-        </div>
-        <div className={classes.row}>
-          <TextField 
-            className={classes.planName} 
-            label="Plano"
-            name="name"
-            defaultValue={name}
-            onChange={handleInputChange}
-            />
-        </div>
-
-      </div>
-      {tasks && <div className={classes.totalTimes}>
-        <Alert severity="info" className={classes.alert}>
-          {`Duración estimada total: ${totalEstimated} minutos`}
-        </Alert>
-        <Alert severity="info"className={classes.alert} >
-          {`Duración calculada total: ${totalCalculated} minutos`}
-        </Alert>
-      </div>}
-
-      <div className={classes.buttonsRow}>
-        <div className={classes.leftBtn}>
-          {id && !form.confirm && (
-          <Button onClick={handleDeleteBtn} color="secondary" className={classes.removeBtn}>
-            Eliminar
-          </Button>)}
-          {form.confirm && (
-          <Alert severity="error" className={classes.alert} action={
-            <>
-            <Button onClick={() => setform({...form, confirm: false})} color="inherit" size="small">
-              CANCELAR
-            </Button>
-            <Button onClick={confirmDelete} color="secondary" size="small">
-              CONFIRMAR
-            </Button>
-            </>
-          }>
-            {`¿Desea eliminar el plano "${form.name}"?`}
-          </Alert>
-        )}
-        </div>
-        <div className={classes.rightBtn}>
-          <span className={classes.error}>{t(form.error, "Sin asignar")}</span>
-          <Button onClick={() => handleTabChange(null, 0)} className={classes.cancelBtn}>
-            Cancelar
-          </Button>
-          <Button disabled={!Boolean(
-            form.company &&
-            form.product &&
-            form.name &&
-            form.tasks?.length
-            )} onClick={handleSave} variant="contained" color="primary" className={classes.confirmBtn}>
-            Guardar
-          </Button>
-        </div>
-      </div>
-     
+      {JSON.stringify(form, null, 2)}
     </div>
   )
 }
