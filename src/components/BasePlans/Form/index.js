@@ -116,6 +116,9 @@ function Form({
         : handleTabChange(null, 0, true)
     })
   }
+  
+  // conditional render
+  if (!validateObject(optionsproducts)) return <InfoError value="Productos"/>
 
   return (
     <div className={classes.container}>
