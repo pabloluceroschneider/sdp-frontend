@@ -16,7 +16,7 @@ import ButtonsToolbarForm from 'components/ButtonsToolbarForm';
 
 import TasksTable from 'components/BasePlans/TasksTable';
 import withTranslation from 'HOCS/withTranslation';
-// import { validateObject, InfoError } from 'helpers/tableHelpers';
+import { validateObject, InfoError } from 'helpers/tableHelpers';
 // import sumTasksTimes from 'helpers/sumTasksTimes';
 
 
@@ -116,7 +116,7 @@ function Form({
         : handleTabChange(null, 0, true)
     })
   }
-  
+
   // conditional render
   if (!validateObject(optionsproducts)) return <InfoError value="Productos"/>
 
