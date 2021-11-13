@@ -3,7 +3,7 @@ import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux';
 
 // services
-// import basePlanService from 'services/basePlanService';
+import basePlanService from 'services/basePlanService';
 
 // dependencies
 import TextField from '@material-ui/core/TextField';
@@ -98,8 +98,24 @@ function Form({
   };
 
 
-  const confirmDeleteWorkOrder = () => {};
-  const handleSave = () => {};
+  // <!---------- actions ---------------->
+  const confirmDeleteWorkOrder = async () => {
+    await basePlanService.delete(row._id);
+    handleTabChange(null, 0, true);
+  };
+  const handleSave = () => {
+    const promiseUpsert = new Promise( async (res, rej) => {
+      const response = row._id 
+        ? await basePlanService.update(form)
+        : await basePlanService.create(form)
+      res(response)
+    })
+    promiseUpsert.then( ({ response, error }) => {
+      error 
+        ? setform( f => ({...f, error: response }))
+        : handleTabChange(null, 0, true)
+    })
+  }
 
   return (
     <div className={classes.container}>
