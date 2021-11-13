@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 // redux 
 import { useSelector } from 'react-redux';
 
@@ -12,7 +12,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Alert from '@material-ui/lab/Alert';
 
 // project components
-import TasksTable from 'components/BasePlans/TasksTable';
 import withTranslation from 'HOCS/withTranslation';
 import { validateObject, InfoError } from 'helpers/tableHelpers';
 import sumTasksTimes from 'helpers/sumTasksTimes';
