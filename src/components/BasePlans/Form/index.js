@@ -33,19 +33,36 @@ const useStyles = makeStyles(styles);
 function Form({ 
     handleTabChange,
     rowSelected: row,
-    handleAutocompleteChange,
 }) {
   const classes = useStyles();
   const companies = useSelector(state => state.appData.companies);
+  const optionsproducts = useSelector(state => state.appData.optionsproducts);
 
   
   // <!------  States  -------->
-  const [form] = React.useState({
+  const [form, setform] = React.useState({
     ...row,
     loadingBtn: false,
     error: '',
     confirm: false,
   });
+
+    // <!------ HANDLERS  -------->
+    const handleAutocompleteChange = (event, value) => {
+      const id = event.target.id.split("-")[0];
+      setform({
+        ...form,
+        [id] : value
+      })
+    }
+    const handleInputChange = event => {
+      const id = event.target.name
+      const value = event.target.value;
+      setform({
+        ...form,
+        [id] : value
+      })
+    };
 
 
   const confirmDeleteWorkOrder = () => {};
@@ -69,6 +86,32 @@ function Form({
             renderInput={(params) => (
               <TextField {...params} label="Cliente" name="company" />
               )}
+            />
+        </div>
+        <div className={classes.row}>
+          <Autocomplete 
+            label="Producto" 
+            id="product"
+            options={optionsproducts[form.company?._id] || []} 
+            value={form.product}
+            disabled={Boolean(row._id)}
+            defaultValue={{name: row.product?.name}} 
+            onChange={handleAutocompleteChange}
+            getOptionSelected={(option, value) => option.name === value.name}
+			      getOptionLabel={option => option.name}
+            className={classes.product} 
+            renderInput={(params) => (
+              <TextField {...params} label="Producto" name="product" />
+              )}
+          />
+        </div>
+        <div className={classes.row}>
+          <TextField 
+            className={classes.planName} 
+            label="Plano"
+            name="name"
+            defaultValue={row.name}
+            onChange={handleInputChange}
             />
         </div>
       <ButtonsToolbarForm
