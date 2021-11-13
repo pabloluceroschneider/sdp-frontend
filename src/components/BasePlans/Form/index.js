@@ -7,17 +7,15 @@ import basePlanService from 'services/basePlanService';
 
 // dependencies
 import TextField from '@material-ui/core/TextField';
-// import Button from '@material-ui/core/Button';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-// import Alert from '@material-ui/lab/Alert';
+import Alert from '@material-ui/lab/Alert';
 
 // project components
 import ButtonsToolbarForm from 'components/ButtonsToolbarForm';
-
 import TasksTable from 'components/BasePlans/TasksTable';
 import withTranslation from 'HOCS/withTranslation';
 import { validateObject, InfoError } from 'helpers/tableHelpers';
-// import sumTasksTimes from 'helpers/sumTasksTimes';
+import sumTasksTimes from 'helpers/sumTasksTimes';
 
 
 // styles
@@ -47,6 +45,8 @@ function Form({
     error: '',
     confirm: false,
   });
+
+  const { totalEstimated, totalCalculated } = sumTasksTimes({tasks: row.tasks});
 
   // <!---------- tasks ----------------->
   const onRowAdd = useCallback( newData => {
@@ -174,6 +174,17 @@ function Form({
           onRowDelete={onRowDelete}
           onHistorialClick={onHistorialClick}
           />
+
+        {form.tasks && (
+          <div className={classes.totalTimes}>
+            <Alert severity="info" className={classes.alert}>
+              {`Duración estimada total: ${totalEstimated} minutos`}
+            </Alert>
+            <Alert severity="info"className={classes.alert} >
+              {`Duración calculada total: ${totalCalculated} minutos`}
+            </Alert>
+          </div>
+        )}
 
       <ButtonsToolbarForm
         onSubmit={handleSave}
