@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 // redux 
 import { useSelector } from 'react-redux';
 
@@ -14,7 +14,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 // project components
 import ButtonsToolbarForm from 'components/ButtonsToolbarForm';
 
-// import TasksTable from 'components/BasePlans/TasksTable';
+import TasksTable from 'components/BasePlans/TasksTable';
 import withTranslation from 'HOCS/withTranslation';
 // import { validateObject, InfoError } from 'helpers/tableHelpers';
 // import sumTasksTimes from 'helpers/sumTasksTimes';
@@ -33,6 +33,7 @@ const useStyles = makeStyles(styles);
 function Form({ 
     handleTabChange,
     rowSelected: row,
+    onHistorialClick,
 }) {
   const classes = useStyles();
   const companies = useSelector(state => state.appData.companies);
@@ -47,22 +48,54 @@ function Form({
     confirm: false,
   });
 
-    // <!------ HANDLERS  -------->
-    const handleAutocompleteChange = (event, value) => {
-      const id = event.target.id.split("-")[0];
-      setform({
-        ...form,
-        [id] : value
-      })
-    }
-    const handleInputChange = event => {
-      const id = event.target.name
-      const value = event.target.value;
-      setform({
-        ...form,
-        [id] : value
-      })
-    };
+  // <!---------- tasks ----------------->
+  const onRowAdd = useCallback( newData => {
+    return new Promise((resolve, _) => {
+      const tasks = Array.from(form.tasks || []);
+      setform( f => ({
+        ...f,
+        tasks : [...tasks, newData ]
+      }))
+      resolve()
+    })},[form.tasks]);
+  const onRowUpdate = useCallback( (newData, oldData) => 
+    new Promise((resolve, _) => {
+      const tasks = Array.from(form.tasks);
+      tasks.splice( oldData.tableData.id, 1, newData)
+      setform( f => ({
+        ...f,
+        tasks,
+      }))
+      resolve()
+    }),[form.tasks]);
+  const onRowDelete = useCallback((newData, oldData) =>
+    new Promise((resolve, _) => {
+      const tasks = Array.from(form.tasks);
+      tasks.splice(newData.id, 1)
+      setform( f => ({
+        ...f,
+        tasks,
+      }))
+      resolve()
+    }),[form.tasks]);
+  // <!---------- /tasks ----------------->
+
+  // <!------ HANDLERS  -------->
+  const handleAutocompleteChange = (event, value) => {
+    const id = event.target.id.split("-")[0];
+    setform({
+      ...form,
+      [id] : value
+    })
+  }
+  const handleInputChange = event => {
+    const id = event.target.name
+    const value = event.target.value;
+    setform({
+      ...form,
+      [id] : value
+    })
+  };
 
 
   const confirmDeleteWorkOrder = () => {};
@@ -114,6 +147,15 @@ function Form({
             onChange={handleInputChange}
             />
         </div>
+
+        <TasksTable 
+          data={form.tasks} 
+          onRowAdd={onRowAdd}
+          onRowUpdate={onRowUpdate}
+          onRowDelete={onRowDelete}
+          onHistorialClick={onHistorialClick}
+          />
+
       <ButtonsToolbarForm
         onSubmit={handleSave}
         onCancel={() => handleTabChange(null, 0)}
