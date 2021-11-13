@@ -1,17 +1,19 @@
 import React from 'react'
 // redux 
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // services
 // import basePlanService from 'services/basePlanService';
 
 // dependencies
-// import TextField from '@material-ui/core/TextField';
+import TextField from '@material-ui/core/TextField';
 // import Button from '@material-ui/core/Button';
-// import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 // import Alert from '@material-ui/lab/Alert';
 
 // project components
+import ButtonsToolbarForm from 'components/ButtonsToolbarForm';
+
 // import TasksTable from 'components/BasePlans/TasksTable';
 import withTranslation from 'HOCS/withTranslation';
 // import { validateObject, InfoError } from 'helpers/tableHelpers';
@@ -29,36 +31,60 @@ const useStyles = makeStyles(styles);
  * Component
  */
 function Form({ 
-    rowSelected,
+    handleTabChange,
+    rowSelected: row,
+    handleAutocompleteChange,
 }) {
   const classes = useStyles();
-  
-  const {
-    _id: id,
-    company,
-    product,
-    name,
-    tasks,
-  } = rowSelected;
+  const companies = useSelector(state => state.appData.companies);
 
+  
   // <!------  States  -------->
   const [form] = React.useState({
-    _id: id,
-    name,
-    company,
-    product,
-    tasks,
+    ...row,
     loadingBtn: false,
     error: '',
     confirm: false,
   });
 
 
-  // conditional render
+  const confirmDeleteWorkOrder = () => {};
+  const handleSave = () => {};
 
   return (
     <div className={classes.container}>
-      {JSON.stringify(form, null, 2)}
+      <div className={classes.form}>
+        <div className={classes.row}>
+          <Autocomplete 
+            className={classes.company} 
+            options={companies} 
+            disabled={Boolean(row._id)}
+            defaultValue={row.company} 
+            value={form.company}
+            getOptionSelected={(option, value) => option.name === value.name}
+            getOptionLabel={option => option.name}
+            label="Cliente" 
+            id="company"
+            onChange={handleAutocompleteChange}
+            renderInput={(params) => (
+              <TextField {...params} label="Cliente" name="company" />
+              )}
+            />
+        </div>
+      <ButtonsToolbarForm
+        onSubmit={handleSave}
+        onCancel={() => handleTabChange(null, 0)}
+        onRemove={confirmDeleteWorkOrder}
+        labels={{
+          confirm: 'confirmar',
+          cancel: 'cancelar',
+          remove: Boolean(row._id) ? 'eliminar': null,
+          removeWarning: '¿Desea eliminar la orden de trabajo?',
+          removeCancel: 'cancelar',
+          removeConfirm: 'confirmar'
+        }}
+       />
+      </div>
     </div>
   )
 }
