@@ -78,6 +78,39 @@ function Form({
     })
   };
 
+  // <!---------- tasks ----------------->
+  const onRowAdd = useCallback( newData => {
+    return new Promise((resolve, _) => {
+      const tasks = Array.from(form.tasks || []);
+      setform( f => ({
+        ...f,
+        tasks : [...tasks, newData ]
+      }))
+      resolve()
+    })},[form.tasks]);
+  const onRowUpdate = useCallback( (newData, oldData) => 
+    new Promise((resolve, _) => {
+      const tasks = Array.from(form.tasks);
+      tasks.splice( oldData.tableData.id, 1, newData)
+      setform( f => ({
+        ...f,
+        tasks,
+      }))
+      resolve()
+    }),[form.tasks]);
+  const onRowDelete = useCallback((newData, oldData) =>
+    new Promise((resolve, _) => {
+      const tasks = Array.from(form.tasks);
+      tasks.splice(newData.id, 1)
+      setform( f => ({
+        ...f,
+        tasks,
+      }))
+      resolve()
+    }),[form.tasks]);
+  // <!---------- /tasks ----------------->
+
+
   // <!---------- actions ---------------->
   const handleSave = () => {
     const promiseUpsert = new Promise( async (res, rej) => {
@@ -150,6 +183,14 @@ function Form({
             onChange={handleInputChange}
             />
         </div>
+
+        <TasksTable 
+          data={form.tasks} 
+          onRowAdd={onRowAdd}
+          onRowUpdate={onRowUpdate}
+          onRowDelete={onRowDelete}
+          onHistorialClick={onHistorialClick}
+          />
 
       </div>
       {tasks && <div className={classes.totalTimes}>
