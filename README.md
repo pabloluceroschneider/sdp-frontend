@@ -7,6 +7,8 @@
 
 **Production System** *(SDP: Sistema de Producción)* is a managment system where the administrator is able to consult, create, update and remove users and their permissions, companies, products, plans and workorders.
 
+This project is the frontend of [sdp-api](https://github.com/pabloluceroschneider/sdp-api) which is in charge of the process and persistance of data.
+
 ### Screenshots
 
 ![image](https://github.com/pabloluceroschneider/sdp-frontend/assets/43233080/c34934b0-6e10-4215-a948-73cf8ab5bbe7)
