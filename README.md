@@ -10,8 +10,11 @@
 
 This project is the frontend of [sdp-api](https://github.com/pabloluceroschneider/sdp-backend) which is in charge of process and persist data.
 
-### Screenshots
+<details>
+  <summary>Screenshots</summary>
+  <br/>
+  <img src="https://github.com/pabloluceroschneider/sdp-frontend/assets/43233080/c34934b0-6e10-4215-a948-73cf8ab5bbe7" />
+    
+  <img src="https://github.com/pabloluceroschneider/sdp-frontend/assets/43233080/d52b3d7a-2acb-4c10-b67e-dcea2235c723" />
 
-<img width="550" src="https://github.com/pabloluceroschneider/sdp-frontend/assets/43233080/c34934b0-6e10-4215-a948-73cf8ab5bbe7" />
-  
-<img width="550" src="https://github.com/pabloluceroschneider/sdp-frontend/assets/43233080/d52b3d7a-2acb-4c10-b67e-dcea2235c723" />
+</details>
